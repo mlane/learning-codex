@@ -1,0 +1,12 @@
+{
+  "name": "learning-codex",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node codex.mjs build",
+    "brief": "node codex.mjs brief",
+    "brief:copy": "node codex.mjs brief | pbcopy",
+    "city": "node codex.mjs city",
+    "new": "node codex.mjs new"
+  }
+}

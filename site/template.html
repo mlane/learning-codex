@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learning Codex</title>
+<style>
+  :root {
+    --night: #120e26;
+    --block: #1c1638;
+    --block-2: #251d4a;
+    --line: #3a2f6b;
+    --ink: #ece7ff;
+    --dim: #9a8fc7;
+    --cyan: #45e0f0;
+    --amber: #ffb547;
+    --pink: #ff4d94;
+    --red: #ff5a4a;
+    --display: "DIN Condensed", "Avenir Next Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+    --body: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--night); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.5; }
+  body { margin: 0; }
+  button { font: inherit; color: inherit; background: none; border: 0; padding: 0; text-align: left; cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px 96px; }
+
+  /* masthead */
+  .top { display: flex; justify-content: space-between; align-items: center; padding: 20px 0 0; color: var(--dim); font-size: 0.875rem; }
+  .top select { font: inherit; color: var(--ink); background: var(--block); border: 1px solid var(--line); padding: 6px 10px; }
+  h1 { font-family: var(--display); font-weight: 700; text-transform: uppercase; font-size: clamp(2.75rem, 8.5vw, 6.5rem); line-height: 0.9; letter-spacing: 0.01em; margin: 28px 0 0; }
+  .sub { color: var(--dim); margin: 10px 0 0; }
+
+  /* skyline */
+  .skyline { margin-top: 40px; padding: 48px 0 0; display: flex; align-items: flex-end; overflow-x: auto; background: linear-gradient(to top, rgba(255, 77, 148, 0.13), rgba(255, 77, 148, 0) 62%) top / 100% calc(100% - 58px) no-repeat; }
+  .plot { flex: 0 0 auto; display: flex; flex-direction: column; }
+  .plot:last-child { flex: 1 0 auto; }
+  .tower { align-self: flex-start; position: relative; margin: 0 18px 0 4px; background: var(--block); border: 1px solid var(--line); border-bottom: 0; padding: 12px 11px 10px; }
+  .plot:nth-child(3n+1) .tower::before { content: ""; position: absolute; left: 18px; bottom: 100%; width: 2px; height: 22px; background: var(--line); }
+  .plot:nth-child(4n+2) .tower::before { content: ""; position: absolute; right: 14px; bottom: 100%; width: 16px; height: 9px; border: 1px solid var(--line); border-bottom: 0; }
+  .windows { display: flex; flex-wrap: wrap-reverse; gap: 6px; width: 74px; }
+  .win { width: 14px; height: 18px; background: var(--block-2); border: 1px solid var(--line); }
+  .win.l1 { background: rgba(69, 224, 240, 0.28); border-color: var(--cyan); }
+  .win.l2 { background: rgba(255, 181, 71, 0.7); border-color: var(--amber); }
+  .win.l3 { background: var(--pink); border-color: var(--pink); box-shadow: 0 0 10px rgba(255, 77, 148, 0.75); }
+  .win.breached { border-color: var(--red); box-shadow: inset 0 3px 0 var(--red); }
+  .win:hover { border-color: var(--ink); }
+  .plot-label { height: 58px; border-top: 1px solid var(--line); padding: 10px 14px 0 4px; font-size: 0.8125rem; line-height: 1.3; color: var(--dim); white-space: nowrap; }
+  .plot-label b { display: block; color: var(--ink); font-weight: 600; }
+  .dark-note { color: var(--dim); margin: 20px 0 0; max-width: 60ch; }
+  @media (prefers-reduced-motion: no-preference) {
+    .win.lit { animation: power-on 0.5s ease-out backwards; }
+    @keyframes power-on { from { background: var(--block-2); border-color: var(--line); box-shadow: none; } }
+  }
+
+  /* status strip */
+  .strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin: 36px 0 0; border: 1px solid var(--line); }
+  .strip > div { padding: 16px 18px; border-left: 1px solid var(--line); }
+  .strip > div:first-child { border-left: 0; }
+  .strip dt { color: var(--dim); font-size: 0.8125rem; }
+  .strip dd { margin: 4px 0 0; }
+  .strip .big { font-family: var(--display); font-size: 2.25rem; line-height: 1; display: block; }
+  .strip small { color: var(--dim); font-size: 0.8125rem; display: block; margin-top: 6px; }
+  .keys { display: flex; gap: 5px; margin-top: 8px; }
+  .keys i { width: 16px; height: 9px; border: 1px solid var(--dim); }
+  .keys i.req { border-color: var(--amber); }
+  .keys i.on { background: var(--cyan); border-color: var(--cyan); }
+  .keys i.req.on { background: var(--amber); border-color: var(--amber); }
+
+  /* body grid */
+  .cols { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 48px; margin-top: 48px; align-items: start; }
+  h2 { font-family: var(--display); font-weight: 700; text-transform: uppercase; font-size: 1.75rem; line-height: 1; letter-spacing: 0.02em; margin: 0; }
+  .legend { color: var(--dim); font-size: 0.875rem; max-width: 68ch; margin: 0 0 28px; }
+
+  .district { margin-bottom: 40px; }
+  .district-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+  .district-head span { color: var(--dim); font-size: 0.875rem; white-space: nowrap; }
+  .meter { display: flex; height: 3px; background: var(--block-2); margin: 10px 0 6px; }
+  .meter i { display: block; }
+  .meter .m3 { background: var(--pink); } .meter .m2 { background: var(--amber); } .meter .m1 { background: var(--cyan); }
+
+  .entry { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto 62px; align-items: center; gap: 14px; width: 100%; padding: 9px 8px; border-bottom: 1px solid rgba(58, 47, 107, 0.6); }
+  .entry:hover { background: var(--block); }
+  .entry.l0 .entry-name { color: var(--dim); }
+  .entry.breached { box-shadow: inset 3px 0 0 var(--red); }
+  .bie { display: flex; gap: 3px; }
+  .bie i { width: 8px; height: 16px; background: var(--block-2); border: 1px solid var(--line); }
+  .bie i.b.on { background: var(--cyan); border-color: var(--cyan); }
+  .bie i.i.on { background: var(--amber); border-color: var(--amber); }
+  .bie i.e.on { background: var(--pink); border-color: var(--pink); }
+  .entry-name { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .entry-id { display: block; font-family: var(--mono); font-size: 0.75rem; color: var(--dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .entry-lives { font-size: 0.8125rem; color: var(--dim); white-space: nowrap; }
+  .pips { display: flex; gap: 5px; align-items: center; color: var(--dim); font-size: 0.8125rem; }
+  .pips i { width: 6px; height: 6px; transform: rotate(45deg); border: 1px solid var(--dim); }
+  .pips i.on { background: var(--ink); border-color: var(--ink); }
+
+  /* side column */
+  aside section { margin-bottom: 40px; }
+  aside h2 { margin-bottom: 14px; }
+  .muted { color: var(--dim); font-size: 0.875rem; }
+  ul.checks { list-style: none; margin: 0; padding: 0; }
+  ul.checks li { display: grid; grid-template-columns: 16px 1fr; gap: 10px; padding: 5px 0; font-size: 0.9375rem; }
+  .box { width: 13px; height: 13px; border: 1px solid var(--dim); margin-top: 5px; display: inline-block; flex: none; }
+  .box.on { background: var(--cyan); border-color: var(--cyan); }
+  li.done { color: var(--dim); text-decoration: line-through; }
+  .tag { font-size: 0.75rem; border: 1px solid var(--cyan); color: var(--cyan); padding: 0 5px; margin-left: 6px; white-space: nowrap; text-decoration: none; display: inline-block; }
+  .tag.req { border-color: var(--amber); color: var(--amber); }
+  details { border-top: 1px solid var(--line); padding: 10px 0; }
+  details summary { cursor: pointer; color: var(--dim); font-size: 0.875rem; }
+  details h3 { font-size: 0.875rem; font-weight: 600; margin: 14px 0 2px; }
+
+  .boss { display: block; width: 100%; padding: 12px 0; border-top: 1px solid var(--line); }
+  .boss:hover .boss-name { color: var(--pink); }
+  .boss-name { font-weight: 600; display: flex; justify-content: space-between; gap: 12px; }
+  .boss-name span { font-weight: 400; color: var(--dim); font-size: 0.8125rem; white-space: nowrap; }
+  .boss-tag { color: var(--dim); font-size: 0.8125rem; display: block; }
+  .hp { height: 6px; background: var(--block-2); margin-top: 8px; }
+  .hp i { display: block; height: 100%; background: var(--red); }
+  .boss.down .boss-name { text-decoration: line-through; color: var(--dim); }
+
+  .damage button { display: block; width: 100%; padding: 8px 0 8px 12px; border-left: 3px solid var(--red); margin-bottom: 8px; font-size: 0.9375rem; }
+  .damage button b { display: block; font-weight: 600; }
+  .damage button:hover { background: var(--block); }
+
+  /* entry sheet */
+  dialog { margin: 0 0 0 auto; height: 100dvh; max-height: none; width: min(600px, 100vw); max-width: none; border: 0; border-left: 1px solid var(--line); background: var(--block); color: var(--ink); padding: 0; }
+  dialog::backdrop { background: rgba(8, 5, 20, 0.72); }
+  .sheet { padding: 28px 32px 64px; }
+  .sheet-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+  .sheet h2 { font-size: 2.5rem; }
+  .close { border: 1px solid var(--line); padding: 6px 12px; font-size: 0.875rem; flex: none; }
+  .close:hover { border-color: var(--ink); }
+  .state { margin: 14px 0 0; font-size: 0.9375rem; }
+  .state b.l0 { color: var(--dim); } .state b.l1 { color: var(--cyan); } .state b.l2 { color: var(--amber); } .state b.l3 { color: var(--pink); }
+  .state .br { color: var(--red); }
+  .path { font-family: var(--mono); font-size: 0.8125rem; color: var(--dim); background: var(--night); padding: 8px 10px; margin: 14px 0 0; overflow-x: auto; white-space: nowrap; }
+  .note { margin-top: 24px; max-width: 62ch; }
+  .note h3 { font-family: var(--display); text-transform: uppercase; font-size: 1.375rem; letter-spacing: 0.02em; margin: 28px 0 8px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .note h4, .note h5 { font-size: 1rem; margin: 18px 0 6px; }
+  .note p { margin: 0 0 10px; }
+  .note .prompt { color: var(--dim); }
+  .note ul { margin: 0 0 10px; padding-left: 20px; }
+  .note li { margin-bottom: 4px; }
+  .note li:has(.box) { list-style: none; margin-left: -20px; display: grid; grid-template-columns: 16px 1fr; gap: 10px; }
+  .note pre { background: var(--night); padding: 12px 14px; overflow-x: auto; font-family: var(--mono); font-size: 0.8125rem; line-height: 1.55; margin: 0 0 12px; }
+  .note code { font-family: var(--mono); font-size: 0.875em; background: var(--night); padding: 1px 5px; }
+  .note pre code { background: none; padding: 0; font-size: inherit; }
+  .note img { max-width: 100%; display: block; margin: 8px 0 12px; border: 1px solid var(--line); }
+  .note a { color: var(--cyan); }
+  .note table { border-collapse: collapse; margin: 0 0 12px; font-size: 0.9375rem; }
+  .note th, .note td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; vertical-align: top; }
+  .note th { color: var(--dim); font-weight: 600; }
+
+  @media (max-width: 900px) {
+    .cols { grid-template-columns: 1fr; gap: 24px; }
+    .strip { grid-template-columns: 1fr 1fr; }
+    .strip > div:nth-child(3) { border-left: 0; }
+    .strip > div:nth-child(n+3) { border-top: 1px solid var(--line); }
+  }
+  @media (max-width: 560px) {
+    .wrap { padding: 0 16px 64px; }
+    .strip { grid-template-columns: 1fr; }
+    .strip > div { border-left: 0; border-top: 1px solid var(--line); }
+    .strip > div:first-child { border-top: 0; }
+    .entry { grid-template-columns: 34px minmax(0, 1fr) 62px; }
+    .entry-lives { display: none; }
+    .sheet { padding: 20px 18px 48px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><span>Learning Codex</span><span id="switch"></span></div>
+  <div id="app"></div>
+</div>
+<dialog id="sheet" aria-labelledby="sheet-title"><div class="sheet" id="sheet-body"></div></dialog>
+
+<script id="codex-data" type="application/json">"__CODEX_DATA__"</script>
+<script>
+(() => {
+  const DATA = JSON.parse(document.getElementById('codex-data').textContent);
+  const app = document.getElementById('app');
+  const sheet = document.getElementById('sheet');
+  const sheetBody = document.getElementById('sheet-body');
+  const LEVELS = ['Locked', 'Seen', 'Scanned', 'Owned'];
+  const DEPTH = ['', 'basics', 'medium', 'advanced', 'expert'];
+  const PROMPT = /^\s*(What it is|Like what I know|Pick it when|Not it when[^:]*|What I built)\s*:/i;
+
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+  const today = new Date();
+  const daysUntil = (iso) => Math.ceil((new Date(iso + 'T23:59:59') - today) / 864e5);
+  const niceDate = (iso) => new Date(iso + 'T12:00:00').toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
+  const isBreached = (x) => x.missed.some((m) => !m.resolved);
+
+  if (typeof DATA === 'string' || !DATA.cities || !DATA.cities.length) {
+    app.innerHTML = '<h1>No city yet</h1><p class="sub">Create one with <code>node codex.mjs city my-topic "My topic"</code>, then run <code>node codex.mjs build</code>.</p>';
+    return;
+  }
+
+  let city = DATA.cities[0];
+  if (DATA.cities.length > 1) {
+    const sel = document.createElement('select');
+    sel.setAttribute('aria-label', 'City');
+    sel.innerHTML = DATA.cities.map((c, i) => `<option value="${i}">${esc(c.title)}</option>`).join('');
+    sel.onchange = () => { city = DATA.cities[+sel.value]; render(); };
+    document.getElementById('switch').append(sel);
+  }
+
+  // ---------- small Markdown renderer for the entry sheet ----------
+  function inline(s, base) {
+    return esc(s)
+      .replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, (_, alt, src) => `<img alt="${alt}" src="${/^(https?:|data:|\/)/.test(src) ? src : base + '/' + src}">`)
+      .replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
+      .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+      .replace(/`([^`]+)`/g, '<code>$1</code>');
+  }
+  function md(src, base) {
+    const lines = src.replace(/<!--[\s\S]*?-->/g, '').split(/\r?\n/);
+    let html = '', code = null, list = false, para = [], table = [];
+    const endP = () => { if (para.length) { html += '<p>' + para.join('<br>') + '</p>'; para = []; } };
+    const endL = () => { if (list) { html += '</ul>'; list = false; } };
+    const endT = () => {
+      if (!table.length) return;
+      const rows = table.filter((r) => !/^\s*\|?[\s:|-]+\|?\s*$/.test(r)).map((r) => r.trim().replace(/^\||\|$/g, '').split('|').map((c) => inline(c.trim(), base)));
+      html += '<table>' + rows.map((r, i) => '<tr>' + r.map((c) => (i ? `<td>${c}</td>` : `<th>${c}</th>`)).join('') + '</tr>').join('') + '</table>';
+      table = [];
+    };
+    const endAll = () => { endP(); endL(); endT(); };
+    for (const line of lines) {
+      if (line.trim().startsWith('```')) {
+        if (code) { html += '<pre><code>' + esc(code.join('\n')) + '</code></pre>'; code = null; }
+        else { endAll(); code = []; }
+        continue;
+      }
+      if (code) { code.push(line); continue; }
+      const h = line.match(/^(#{2,4})\s+(.*)/);
+      if (h) { endAll(); const n = h[1].length + 1; html += `<h${n}>${inline(h[2], base)}</h${n}>`; continue; }
+      if (/^\s*\|/.test(line)) { endP(); endL(); table.push(line); continue; }
+      const li = line.match(/^\s*[-*]\s+(?:\[( |x|X)\]\s+)?(.*)/);
+      if (li) {
+        endP(); endT();
+        if (!list) { html += '<ul>'; list = true; }
+        const box = li[1] === undefined ? '' : `<span class="box${li[1] === ' ' ? '' : ' on'}"></span>`;
+        html += `<li>${box}<span>${inline(li[2], base)}</span></li>`;
+        continue;
+      }
+      if (!line.trim()) { endAll(); continue; }
+      endL(); endT();
+      const p = line.match(PROMPT);
+      if (p) {
+        const rest = line.slice(p[0].length).trim();
+        para.push(`<span class="prompt">${esc(p[0].trim())}</span> ${rest ? inline(rest, base) : '<span class="prompt">not written yet</span>'}`);
+      } else para.push(inline(line, base));
+    }
+    if (code) html += '<pre><code>' + esc(code.join('\n')) + '</code></pre>';
+    endAll();
+    return html;
+  }
+
+  // ---------- sheet ----------
+  function openCard(id) {
+    const c = city.cards.find((x) => x.id === id);
+    if (!c) return;
+    const next = c.level === 3 ? 'All three parts are written.'
+      : !c.b ? 'Next: write Baseline to mark it Seen.'
+      : !c.i ? 'Next: write Isolate to mark it Scanned.'
+      : !c.e ? 'Next: build something and record it under Execute to own it.'
+      : 'Write the earlier parts too; status goes in order.';
+    const open = c.missed.filter((m) => !m.resolved).length;
+    sheetBody.innerHTML = `
+      <div class="sheet-top"><h2 id="sheet-title">${esc(c.name)}</h2><button class="close" data-close>Close</button></div>
+      <p class="state"><b class="l${c.level}">${LEVELS[c.level]}</b>. ${next}
+        ${open ? `<span class="br">Breached: ${plural(open, 'missed question', 'missed questions')} to resolve.</span>` : ''}</p>
+      <p class="muted">Depth needed: ${DEPTH[c.threat]} (${c.threat} of 4${c.estimate ? ', estimate' : ', from the trainer sheet'}).
+        ${c.livesAt ? 'Lives at: ' + esc(c.livesAt) + '.' : 'Lives at: not set yet (zonal, regional, multi-regional or global).'}</p>
+      <p class="path">cities/${esc(city.id)}/cards/${esc(c.id)}.md</p>
+      <div class="note">${md(c.body, `cities/${city.id}/cards`)}</div>`;
+    sheet.showModal();
+  }
+  function openBoss(id) {
+    const b = city.bosses.find((x) => x.id === id);
+    if (!b) return;
+    const done = b.parts.filter((p) => p.done).length;
+    sheetBody.innerHTML = `
+      <div class="sheet-top"><h2 id="sheet-title">${esc(b.name)}</h2><button class="close" data-close>Close</button></div>
+      <p class="state">${b.hp === 0 ? 'Defeated.' : `HP ${b.hp}%. ${done} of ${b.parts.length} parts written.`}</p>
+      <p class="path">cities/${esc(city.id)}/bosses/${esc(b.id)}.md</p>
+      <div class="note">${md(b.body, `cities/${city.id}/bosses`) || '<p class="muted">Nothing written yet.</p>'}</div>`;
+    sheet.showModal();
+  }
+  sheet.addEventListener('click', (e) => { if (e.target === sheet || e.target.closest('[data-close]')) sheet.close(); });
+
+  // ---------- page ----------
+  function render() {
+    const cards = city.cards;
+    const count = (l) => cards.filter((c) => c.level === l).length;
+    const power = cards.length ? Math.round((100 * cards.reduce((s, c) => s + c.level, 0)) / (3 * cards.length)) : 0;
+    const byDistrict = city.districts.map((d) => ({
+      ...d,
+      cards: cards.filter((c) => c.district === d.id).sort((a, b) => b.threat - a.threat || a.name.localeCompare(b.name)),
+    })).filter((d) => d.cards.length);
+
+    // skyline
+    let n = 0;
+    const towers = byDistrict.map((d) => `
+      <div class="plot"><div class="tower"><div class="windows">${d.cards.map((c) => {
+        const delay = c.level ? ` style="animation-delay:${(n++ * 35)}ms"` : '';
+        const label = `${c.name}: ${LEVELS[c.level]}${isBreached(c) ? ', breached' : ''}`;
+        return `<button class="win l${c.level}${c.level ? ' lit' : ''}${isBreached(c) ? ' breached' : ''}" data-card="${esc(c.id)}" title="${esc(label)}" aria-label="${esc(label)}"${delay}></button>`;
+      }).join('')}</div></div>
+      <div class="plot-label"><b>${esc(d.name)}</b>${d.cards.filter((c) => c.level === 3).length} of ${d.cards.length} owned</div></div>`).join('');
+
+    // deadline
+    const upcoming = city.milestones.filter((m) => daysUntil(m.date) >= 0).sort((a, b) => a.date.localeCompare(b.date));
+    const last = city.milestones.length ? [...city.milestones].sort((a, b) => a.date.localeCompare(b.date)).pop() : null;
+    const deadline = !last ? '<span class="big">No dates</span><small>Add milestones in city.json.</small>'
+      : daysUntil(last.date) < 0 ? `<span class="big">Past</span><small>${esc(last.label)} was ${niceDate(last.date)}.</small>`
+      : `<span class="big">${plural(daysUntil(last.date), 'day', 'days')}</span><small>${esc(last.label)}, ${niceDate(last.date)}.${upcoming[0] && upcoming[0] !== last ? ` Next: ${esc(upcoming[0].label.toLowerCase())} in ${plural(daysUntil(upcoming[0].date), 'day', 'days')}.` : ''}</small>`;
+
+    // keys
+    const keys = city.weeks.flatMap((w) => w.items.filter((i) => i.key));
+    const keysDone = keys.filter((k) => k.done).length;
+    const reqLeft = keys.filter((k) => k.key === 'required' && !k.done);
+    const gateOpen = keys.length && keysDone >= city.keysNeeded && !reqLeft.length;
+    const keyHtml = !keys.length ? '<span class="big">None</span><small>Tag a quest with {key} to track badges.</small>'
+      : `<span class="big">${keysDone} of ${keys.length}</span>
+         <div class="keys">${keys.map((k) => `<i class="${k.key === 'required' ? 'req ' : ''}${k.done ? 'on' : ''}" title="${esc(k.text)}"></i>`).join('')}</div>
+         <small>${gateOpen ? 'Gate open. Apply for the voucher.' : `Gate opens at ${city.keysNeeded}${reqLeft.length ? ', and the amber key is required' : ''}.`}</small>`;
+
+    // sync rate
+    const qz = city.quizzes;
+    const got = qz.reduce((s, q) => s + q.got, 0), total = qz.reduce((s, q) => s + q.total, 0);
+    const lastQ = qz.length ? [...qz].sort((a, b) => a.date.localeCompare(b.date)).pop() : null;
+    const sync = !qz.length ? `<span class="big">No data</span><small>Log a quiz in quizzes.md. Target ${city.targetAccuracy}%.</small>`
+      : `<span class="big">${Math.round((100 * got) / total)}%</span><small>Across ${plural(qz.length, 'quiz', 'quizzes')}. Last: ${esc(lastQ.label)}, ${lastQ.got}/${lastQ.total}. Target ${city.targetAccuracy}%.</small>`;
+
+    // entries
+    const districts = byDistrict.map((d) => {
+      const pct = (l) => (100 * d.cards.filter((c) => c.level === l).length) / d.cards.length;
+      return `<section class="district">
+        <div class="district-head"><h2>${esc(d.name)}</h2><span>${d.cards.filter((c) => c.level === 3).length} of ${d.cards.length} owned</span></div>
+        <div class="meter"><i class="m3" style="width:${pct(3)}%"></i><i class="m2" style="width:${pct(2)}%"></i><i class="m1" style="width:${pct(1)}%"></i></div>
+        ${d.cards.map((c) => `<button class="entry l${c.level}${isBreached(c) ? ' breached' : ''}" data-card="${esc(c.id)}">
+          <span class="bie" title="Baseline, Isolate, Execute"><i class="b${c.b ? ' on' : ''}"></i><i class="i${c.i ? ' on' : ''}"></i><i class="e${c.e ? ' on' : ''}"></i></span>
+          <span><span class="entry-name">${esc(c.name)}</span><span class="entry-id">${esc(c.id)}</span></span>
+          <span class="entry-lives">${esc(c.livesAt)}</span>
+          <span class="pips" title="Depth needed: ${DEPTH[c.threat]}${c.estimate ? ' (estimate)' : ' (trainer sheet)'}">${[1, 2, 3, 4].map((k) => `<i class="${k <= c.threat ? 'on' : ''}"></i>`).join('')}${c.estimate ? '<span>~</span>' : ''}</span>
+        </button>`).join('')}
+      </section>`;
+    }).join('');
+
+    // quests
+    const dated = city.weeks.filter((w) => w.start);
+    let current = null;
+    for (const w of dated) if (new Date(w.start + 'T00:00:00') <= today) current = w;
+    const idx = current ? city.weeks.indexOf(current) : -1;
+    const earlier = city.weeks.filter((w, i) => (idx < 0 ? !w.start : i < idx) && w.items.some((x) => !x.done));
+    const later = city.weeks.filter((w, i) => (idx < 0 ? !!w.start : i > idx));
+    const item = (x) => `<li class="${x.done ? 'done' : ''}"><span class="box${x.done ? ' on' : ''}"></span><span>${esc(x.text)}${x.key ? `<span class="tag${x.key === 'required' ? ' req' : ''}">${x.key === 'required' ? 'required key' : 'key'}</span>` : ''}</span></li>`;
+    const backlog = earlier.reduce((s, w) => s + w.items.filter((x) => !x.done).length, 0);
+    const quests = !city.weeks.length ? '<p class="muted">No quests. Add weeks to quests.md.</p>' : `
+      ${current ? `<p class="muted">${esc(current.title)}${current.hours ? ', ' + esc(current.hours) : ''}</p><ul class="checks">${current.items.map(item).join('')}</ul>` : '<p class="muted">Nothing has started yet.</p>'}
+      ${backlog ? `<details${current ? '' : ' open'}><summary>Backlog: ${plural(backlog, 'open item', 'open items')} from earlier</summary>${earlier.map((w) => `<h3>${esc(w.title)}</h3><ul class="checks">${w.items.filter((x) => !x.done).map(item).join('')}</ul>`).join('')}</details>` : ''}
+      ${later.length ? `<details><summary>Coming up</summary>${later.map((w) => `<h3>${esc(w.title)}${w.hours ? ', ' + esc(w.hours) : ''}</h3><ul class="checks">${w.items.map(item).join('')}</ul>`).join('')}</details>` : ''}`;
+
+    // bosses
+    const bosses = !city.bosses.length ? '<p class="muted">No bosses. Add a file to the bosses folder.</p>'
+      : city.bosses.map((b) => `<button class="boss${b.hp === 0 ? ' down' : ''}" data-boss="${esc(b.id)}">
+          <span class="boss-name">${esc(b.name)}<span>${b.hp === 0 ? 'Defeated' : 'HP ' + b.hp + '%'}</span></span>
+          <span class="boss-tag">${esc(b.tagline)}</span>
+          <span class="hp"><i style="width:${b.hp}%"></i></span></button>`).join('');
+
+    // damage
+    const hits = [
+      ...cards.flatMap((c) => c.missed.filter((m) => !m.resolved).map((m) => ({ who: c.name, attr: `data-card="${esc(c.id)}"`, text: m.text }))),
+      ...city.bosses.flatMap((b) => b.missed.filter((m) => !m.resolved).map((m) => ({ who: b.name, attr: `data-boss="${esc(b.id)}"`, text: m.text }))),
+    ];
+    const damage = hits.length ? hits.map((h) => `<button ${h.attr}><b>${esc(h.who)}</b>${esc(h.text)}</button>`).join('')
+      : '<p class="muted">Nothing open. When a practice question beats you, add a line under Missed in that card.</p>';
+
+    document.title = `${city.title} | Learning Codex`;
+    app.innerHTML = `
+      <h1>${esc(city.title)}</h1>
+      ${city.subtitle ? `<p class="sub">${esc(city.subtitle)}</p>` : ''}
+      <div class="skyline" role="group" aria-label="City skyline, one window per entry">${towers}</div>
+      ${power === 0 ? '<p class="dark-note">Every window is dark. Write the Baseline on one card and run the build to light the first one.</p>' : ''}
+      <dl class="strip">
+        <div><dt>City power</dt><dd><span class="big">${power}%</span><small>${count(3)} owned, ${count(2)} scanned, ${count(1)} seen, ${count(0)} locked.</small></dd></div>
+        <div><dt>Time left</dt><dd>${deadline}</dd></div>
+        <div><dt>Access keys</dt><dd>${keyHtml}</dd></div>
+        <div><dt>Sync rate</dt><dd>${sync}</dd></div>
+      </dl>
+      <div class="cols">
+        <main>
+          <p class="legend">The three bars are Baseline, Isolate and Execute. Diamonds show the depth the exam needs, from 1 to 4; a tilde marks an estimate instead of the trainer's sheet. A red edge means an unresolved missed question.</p>
+          ${districts}
+        </main>
+        <aside>
+          <section><h2>This week</h2>${quests}</section>
+          <section><h2>Bosses</h2>${bosses}</section>
+          <section class="damage"><h2>Damage log</h2>${damage}</section>
+        </aside>
+      </div>`;
+  }
+
+  app.addEventListener('click', (e) => {
+    const c = e.target.closest('[data-card]');
+    if (c) return openCard(c.dataset.card);
+    const b = e.target.closest('[data-boss]');
+    if (b) openBoss(b.dataset.boss);
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

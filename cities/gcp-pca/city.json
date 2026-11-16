@@ -1,0 +1,22 @@
+{
+  "title": "Professional Cloud Architect",
+  "subtitle": "Google Cloud",
+  "milestones": [
+    { "label": "Cohort sessions end", "date": "2026-12-08" },
+    { "label": "Voucher form closes", "date": "2026-12-29" },
+    { "label": "Last day to sit the exam", "date": "2027-01-20" }
+  ],
+  "keys_needed": 5,
+  "target_accuracy": 85,
+  "districts": [
+    { "id": "core", "name": "Foundation" },
+    { "id": "compute", "name": "Compute" },
+    { "id": "network", "name": "Network" },
+    { "id": "data", "name": "Data" },
+    { "id": "security", "name": "Security" },
+    { "id": "ops", "name": "Operations" },
+    { "id": "delivery", "name": "Delivery" },
+    { "id": "migrate", "name": "Migration" },
+    { "id": "ai", "name": "AI" }
+  ]
+}
