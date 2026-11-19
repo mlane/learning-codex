@@ -278,8 +278,20 @@ Bigtable.
 - Typically this is used to serve data to applications, dashboards, and data services.
 - Data can also be streamed in through a variety of popular stream processing frameworks like Dataflow Streaming, Spark Streaming, and Storm.
 - And if streaming is not an option, data can also be read from and written to Bigtable through batch processes like Hadoop MapReduce, Dataflow, or Spark.
-
 --
 Object storage - data storage architecture that manages data as “objects” and not as a file and folder hierarchy (file storage), or as chunks of a disk (block storage).
+# --- Containers ---
+The smallest unit of compute is an app with its VM.
+The guest OS might be large, even gigabytes in size, and take minutes to boot.
+A container is an invisible box around your code and its dependencies with limited access to its own partition of the file system and hardware.
+All that’s needed on each host is an OS kernel that supports containers and a container runtime.
+This makes code ultra portable, and the OS and hardware can be treated as a black box.
+So you can go from development, to staging, to production, or from your laptop to the cloud, without changing or rebuilding anything.
+Google Kubernetes Engine (GKE) acts as a bridge between these models, providing the automation of PaaS with the granular control of IaaS.
+With a container, you can do this in seconds and deploy dozens or hundreds of them, depending on the size of your workload, on a single host.
+However, you'll probably want to build your applications using lots of containers, each performing their own function like microservices.
+If you build them this way and connect them with network connections, you can make them modular, deploy easily, and scale independently across a group of hosts.
+# --- Misc ---
+
 
 #player-control-overlay.fadein .player-controls-content{opacity:0}
