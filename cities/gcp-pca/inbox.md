@@ -55,6 +55,17 @@ For which of these interconnect options is a Service Level Agreement available?
 Which of the following describes a Virtual Private Cloud (VPC)?
 - A secure, individual, private cloud-computing model hosted within a public cloud.
 
+Which storage use case is best suited for Google Cloud Storage?
+- Storing unstructured data that requires high durability (99.999999999% / 11 9s) and available object storage designed for unstructured data like media files, backups, and logs.
+
+
+A company requires a relational database service that can scale horizontally to petabytes of data while maintaining high availability. Which Google Cloud service meets this requirement?
+- Spanner is an enterprise-grade, horizontally scalable relational database that scales to petabytes of storage with strong consistency and up to 99.999% availability
+
+For what primary use case should an organization choose the Coldline storage class in Cloud Storage?
+- To minimize monthly storage costs for data accessed less than once a quarter.
+- Coldline storage offers significantly lower monthly at-rest storage rates compared to Standard and Nearline classes, making it ideal for data accessed infrequently (at most once every 90 days).
+
 --------------
 
 Shared VPC - connect resources from multiple projects to VPC network
