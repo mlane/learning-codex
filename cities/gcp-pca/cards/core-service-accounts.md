@@ -3,16 +3,19 @@ name: Service accounts
 district: core
 threat: 3
 threat_source: estimate
-lives_at:
+lives_at: global
 ---
 
 ## Baseline
-What it is:
+What it is: An identity for a workload (VM, app, pipeline) instead of a person, so it can call Google APIs, e.g. a VM reading a Cloud Storage bucket. Identified by an email address and given roles through IAM like any principal.
+- It's also a resource: you control who can use or impersonate it (Service Account User role).
+- Attach it to the VM or Cloud Run service and Google handles short-lived credentials. Downloaded keys are a security risk to avoid.
+- Prefer one dedicated service account per app with only the roles it needs over the default Compute Engine one.
 Like what I know:
 
 ## Isolate
-Pick it when:
-Not it when (use ___ instead):
+Pick it when: Code or a machine needs to call Google Cloud APIs without a person signed in.
+Not it when (use Workload Identity Federation instead): The workload runs outside Google Cloud (on-prem, AWS, GitHub Actions). Federate its existing identity instead of exporting a key.
 
 ## Execute
 What I built:
