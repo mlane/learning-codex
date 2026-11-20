@@ -58,13 +58,41 @@ Which of the following describes a Virtual Private Cloud (VPC)?
 Which storage use case is best suited for Google Cloud Storage?
 - Storing unstructured data that requires high durability (99.999999999% / 11 9s) and available object storage designed for unstructured data like media files, backups, and logs.
 
-
 A company requires a relational database service that can scale horizontally to petabytes of data while maintaining high availability. Which Google Cloud service meets this requirement?
 - Spanner is an enterprise-grade, horizontally scalable relational database that scales to petabytes of storage with strong consistency and up to 99.999% availability
 
 For what primary use case should an organization choose the Coldline storage class in Cloud Storage?
 - To minimize monthly storage costs for data accessed less than once a quarter.
 - Coldline storage offers significantly lower monthly at-rest storage rates compared to Standard and Nearline classes, making it ideal for data accessed infrequently (at most once every 90 days).
+
+What is a Kubernetes pod?
+- A group of containers (In Kubernetes, a group of one or more containers is called a pod. Containers in a pod are deployed together. They are started, stopped, and replicated as a group.The simplest workload that Kubernetes can deploy is a pod that consists only of a single container.)
+
+Where do the resources used to build Google Kubernetes Engine clusters come from?
+- Compute Engine (resources used to build Google Kubernetes Engine clusters come from Compute Engine, Google Kubernetes Engine gets to take advantage of Compute Engine’s and Google VPC’s capabilities)
+
+Which scenario is best suited for using Cloud Run instead of Cloud Run functions?
+- Hosting a dynamic web application that allows users to upload and share photos. (This scenario requires a scalable web application with persistent connections and user interactions, making it ideal for Cloud Run's containerized environment and autoscaling capabilities.)
+
+Which of these statements about Cloud Run functions are correct? Select three. 'Cloud Run functions:'
+- Is a scalable functions-as-a-service platform. (Cloud Run functions is a service that enables you to build single-purpose functions that can automatically scale based on the number of requests to your function.)
+- Can be used to extend Cloud services. (Cloud Run functions can be used as a connective layer to connect and extend other cloud services and create a serverless application.)
+- Is integrated with Cloud Logging. (Cloud Run functions is integrated with Google Cloud Observability logging and monitoring services to make it fully observable.)
+
+Why might a Google Cloud customer choose to use Cloud Run functions?
+- Their application contains event-driven code that they don't want to provision compute resources for.
+
+What is the primary defining function of generative AI?
+- Generate original text, images, code, or other media using generative models.
+
+You need a large language model (LLM) to convert unstructured text into a rigid, custom JSON structure. Which prompting technique should you implement?
+- A few-shot prompt that includes illustrative output examples.
+
+How can you avoid hallucinations when training or prompting a large language model (LLM)?
+- Train the model on a clean, curated dataset.
+
+You are designing prompts to guide a large language model (LLM) toward clear and reliable responses. Which practice aligns with Google-recommended guidelines for prompt construction?
+- Maintain concise phrasing and direct instructions.
 
 --------------
 
@@ -291,6 +319,102 @@ Google Kubernetes Engine (GKE) acts as a bridge between these models, providing 
 With a container, you can do this in seconds and deploy dozens or hundreds of them, depending on the size of your workload, on a single host.
 However, you'll probably want to build your applications using lots of containers, each performing their own function like microservices.
 If you build them this way and connect them with network connections, you can make them modular, deploy easily, and scale independently across a group of hosts.
+Kubernetes is an open-source platform for managing containerized workloads and services.
+At the highest level, Kubernetes is a set of APIs that you can use to deploy containers on a set of nodes called a cluster.
+The system is divided into a set of primary components that run as the control plane and a set of nodes that run containers.
+In Kubernetes, a node represents a computing instance, like a machine.
+Note that this is different to a node on Google Cloud which is a virtual machine running in Compute Engine.
+A Pod is the smallest unit in Kubernetes that you can create or deploy.
+One way to run a container in a Pod in Kubernetes is to use the kubectl run command, which starts a Deployment with a container running inside a Pod.
+In GKE, the load balancer is created as a network load balancer.
+To scale a Deployment, run the kubectl scale command.
+But the real strength of Kubernetes comes when you work in a declarative way.
+Instead of issuing commands, you provide a configuration file that tells Kubernetes what you want your desired state to look like, and Kubernetes determines how to do it.
+To run five replicas instead of three, all you do is update the Deployment config file and run the kubectl apply command to use the updated config file.
+GKE is a Google-hosted managed Kubernetes service in the cloud.
+The GKE environment consists of multiple machines, specifically Compute Engine instances, grouped together to form a cluster.
+You can create a Kubernetes cluster with GKE, but how is GKE different from Kubernetes?
+GKE is responsible for provisioning and managing all the control plane infrastructure behind it.
+It also eliminates the need for a separate control plane.
+With the Autopilot mode, which is recommended, GKE manages the underlying infrastructure such as node configuration, autoscaling, auto- upgrades, baseline security configurations, and baseline networking configuration.
+With the Standard mode, you manage the underlying infrastructure, including configuring the individual nodes.
+Autopilot is optimized for production.
+To start up Kubernetes on a cluster in GKE, all you do is run this command: gcloud container clusters create-auto k1 --region, specifying the cluster region.
+Running a GKE cluster comes with the benefit of advanced cluster management features that Google Cloud provides.
+These include Google Cloud's load-balancing for Compute Engine instances; Node pools to designate subsets of nodes within a cluster for additional flexibility; Automatic scaling of your cluster's node instance count; Automatic upgrades for your cluster's node software; Node auto-repair to maintain node health and availability; And logging and monitoring with Google Cloud Observability for visibility into your cluster.
+# --- Cloud Run ---
+Cloud Run is serverless.
+Cloud Run is built on Knative, an open API and runtime environment built on Kubernetes.
+It can automatically scale up and down from zero almost instantaneously, and it charges only for resources used, calculated down to the nearest 100 milliseconds, so you‘ll never pay for over-provisioned resources.
+The Cloud Run developer workflow is a straightforward three-step process.
+1. First, you write your application using your favorite programming language. Listens for web requests
+2. Second, you build and package your application into a container image.
+3. And third, the container image is pushed to Artifact Registry, where Cloud Run will deploy it.
+Once you’ve deployed your container image, you’ll get a unique HTTPS URL back.
+Cloud Run then starts your container on demand to handle requests, and ensures that all incoming requests are handled by dynamically adding and removing containers.
+Because Cloud Run is serverless, it means that you, as a developer, can focus on building your application and not on building and maintaining the infrastructure that powers it.
+You can use a container-based workflow, as well as a source-based workflow.
+The source-based approach will deploy source code instead of a container image.
+Cloud Run does this using Buildpacks - an open source project.
+Cloud Run handles HTTPS serving for you.
+That means you only have to worry about handling web requests, and you can let Cloud Run take care of adding the encryption.
+The pricing model on Cloud Run is unique; as you only pay for the system resources you use
+Additionally, there is a small fee for every one million requests you serve.
+The price of container time increases with CPU and memory.
+A container with more vCPU and memory is more expensive.
+You can use Cloud Run to run any binary, as long as it’s compiled for Linux sixty-four bit.
+Now, this means you can use Cloud Run to run web applications written using popular languages, such as: Java, Python, Node.js, PHP, Go, and C++.
+You can also run code written in less popular languages, such as: Cobol, Haskell, and Perl.
+Many applications contain event-driven parts.
+For example, an application that lets users upload images.
+When that event takes place, the image might need to be processed in a few different ways, like converting the image to a standard format, converting a thumbnail into different sizes, and storing each new file in a repository.
+With Cloud Run functions, you write a single-purpose function that completes the necessary image manipulations and then arrange for it to automatically run whenever a new image is uploaded.
+You’re billed to the nearest 100 milliseconds, but only while your code is running.
+Events from Cloud Storage and Pub/Sub can trigger Cloud Run functions asynchronously, or you can use HTTP invocation for synchronous execution.
+# --- Prompt Engineering --
+Generative AI and large language models are proving to be powerful tools, but to leverage their capabilities, it's important to understand their architecture.
+What is generative AI?
+- Generative AI encompasses a broader range of models capable of generating various types of content beyond just text
+- subset of artificial intelligence that is capable of creating text, images, or other data using generative models, often in response to prompts.
+What is a large language model?
+- It has grown in popularity hugely since 2021 but artificial intelligence has been around since the mid 1950s.
+- prompt is a specific instruction, question, or cue given to a computer program or user to initiate a specific action or response, but we examine this more later.
+- In its current format, gen AI models are like conversational programs that can generate content based on the inputs supplied.
+- LLM specifically refers to a subset of generative AI models focusing on language tasks.
+What is prompt engineering?
+Prompt engineering best practices.
+Generative AI has uses across a wide range of industries, including software development, healthcare, finance, entertainment, customer service, and sales.
+Large language models refer to large, general-purpose language models that can be pre-trained and then fine-tuned for specific purposes.
+In this context, large refers to: The size of the training dataset, which can sometimes be at the petabyte scale.
+Parameters are the memories and knowledge that the machine has learned during model training.
+They determine the ability of a model to solve a problem, such as predicting text, and can reach billions or even trillions in size.
+General-purpose means that the models can sufficiently solve common problems.
+This is thanks to the commonality of a human language, regardless of the specific tasks.
+Saying LLMs are pre-trained and fine-tuned, means… …that they have been pre-trained for a general purpose with a large dataset… ...and then fine-tuned for specific goals with a much smaller dataset.
+But how are LLMs trained?
+The probability is determined through a task called pre-training.
+Pre-training an LLM involves feeding a massive dataset of text, images, and code to the model so that it can learn the underlying structure and patterns of the language.
+But sometimes the LLM gives a completely wrong answer.
+This is called a hallucination.
+Hallucinations are words or phrases that are generated by the model that are often nonsensical or grammatically incorrect.
+Hallucinations can be a problem for LLMs because they can make the output text difficult to understand.
+Prompts can be in the form of a question, and are categorized into four categories: zero-shot, one-shot, few-shot, and role prompts.
+Zero-shot prompts do not contain any context or examples to assist the model.
+For example, the prompt “What’s the capital of France?” does not provide any examples of what a capital is.
+One-shot prompts, however, provide one example to the model for context.
+And few-shot prompts provide at least two examples to the model for context.
+LLM to better understand what you want. It can include the context for the task, the task itself, and some examples to guide the model. The
+Be clear and concise in the prompts that you feed into the model.
+Another best practice is to adopt a persona for your input.
+And finally, it’s a recommended practice to keep each sentence concise.
+Longer sentences can sometimes produce suboptimal results.
+With this new prompt, Gemini proposes a hub-and-spoke network architecture, which fits Sasha’s needs exactly.
+Hallucinations can be caused by a number of factors, including: The model is not trained on enough data.
+The model is trained on noisy or dirty data.
+The model is not given enough context.
+The model is not given enough constraints.
+
+
 # --- Misc ---
 
 
