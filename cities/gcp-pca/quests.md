@@ -9,19 +9,19 @@ Items tagged `{key}` are skill badges (access keys). `{key!}` is the required on
 - [ ] Skim all four case studies
 
 ## Week 1 | 2026-11-03 | ~9h
+- [x] Attend the live session, Tuesday 13:00 to 14:30 Central
 - [x] Course: Google Cloud Fundamentals: Core Infrastructure
 - [ ] Course: Essential Google Cloud Infrastructure: Core Services
 - [ ] Badge: Implement Load Balancing on Compute Engine {key}
-- [ ] Watch the week 1 session recording
 
 ## Week 2 | 2026-11-10 | ~15h
+- [x] Attend the live session, Tuesday 13:00 to 14:30 Central
 - [ ] Course: Networking in Google Cloud: Fundamentals
 - [ ] Course: Elastic Google Cloud Infrastructure: Scaling and Automation
 - [ ] Badge: Set Up an App Dev Environment on Google Cloud {key}
-- [ ] Watch the week 2 session recording
 
 ## Week 3 | 2026-11-17 | ~17h
-- [ ] Attend the live session, Tuesday 13:00 to 14:30 Central
+- [x] Attend the live session, Tuesday 13:00 to 14:30 Central
 - [ ] Course: Networking in Google Cloud: Network Architecture
 - [ ] Course: Managing Security in Google Cloud
 - [ ] Badge: Implement Cloud Security Fundamentals on Google Cloud {key}
