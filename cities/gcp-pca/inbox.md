@@ -10,6 +10,12 @@ What abstraction is primarily used to administer user access in IAM?
 - Roles, an abstraction of job roles.
 Identify the option that is NOT a type of IAM role.
 - Advanced
+Which data storage service provides data warehouse services for storing data but also offers an interactive SQL interface for querying the data?
+- BigQuery
+Which Google Cloud data storage service offers ACID transactions and can scale globally?
+- Spanner
+What data storage service might you select if you just needed to migrate a standard relational database running on a single machine in a datacenter to the cloud?
+- Cloud SQL
 # --- IAM
 Organization node - root node (roles, organization admin (define IAM policies, userful for auditing), project creator) - provisioned automatically when a user with Google Workspace or Cloud Identity crated Google Cloud Project. Resource manager Roles (Admin, Viewer)
 Folders - grouping/isolation boundary between projects. Allows delegation of admin rights. Resource manager Roles (Admin, Creator, Viewer)
@@ -34,3 +40,4 @@ Note: A few points to consider:
 SSD (solid-state drive) is the best choice for most use cases. HDD (hard-disk drive) offers lower performance, but storage costs are significantly reduced, so HDD may be preferable for storing data that is infrequently accessed and does not require very low latency.
 There is a direct relationship between the storage capacity and its throughput.
 AlloyDB for PostgreSQL is a fully managed, PostgreSQL-compatible database service that’s designed for demanding workloads such as hybrid transactional and analytical processing.
+Memorystore for Redis provides a fully managed in-memory datastore service built on scalable, secure, and highly available infrastructure managed by Google. Also automates complex tasks like enabling high availability, failover, patching, and monitoring.
