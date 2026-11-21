@@ -21,3 +21,7 @@ Policy - list of bindings, binding binds a list of members to a role. Role is a 
 Service accounts - if an app interacts with Cloud Storage, it must first auth to Cloud Storage. Identified by email. User-managed keys should be used as a last resort. Up to 10 account keys per service account to faciliate key rotation. User-managed private keys does not save them, so can't help with recover. User managed keys should be used as last resort.
 Org restrictions - let you prevent data exfiltration through phishing or insider attacks. Requirement is managed device (e.g. computer). Egress proxy administrator configures proxy to add restrictions.
 IAM Best Practices - leverage resource hierarchy, use principle of least privilege, audit policies/membership. Grant roles to groups over individuals. Service accounts establish key rotations and audit. Identity-Aware Proxy (IAP) - enforce access control policies for apps (IAM policy applied after auth, requires a VPN)
+# --- Storage ---
+Object Lifecycle Management which lets you automatically delete or archive objects. lifecycle configuration may take up to 24 hours to go into effect.
+Directory synchronization
+Soft Delete feature is enabled by default with a retention duration of seven days
