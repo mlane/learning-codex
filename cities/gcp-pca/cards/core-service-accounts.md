@@ -9,7 +9,8 @@ lives_at: global
 ## Baseline
 What it is: An identity for a workload (VM, app, pipeline) instead of a person, so it can call Google APIs, e.g. a VM reading a Cloud Storage bucket. Identified by an email address and given roles through IAM like any principal.
 - It's also a resource: you control who can use or impersonate it (Service Account User role).
-- Attach it to the VM or Cloud Run service and Google handles short-lived credentials. Downloaded keys are a security risk to avoid.
+- Attach it to the VM or Cloud Run service and Google handles short-lived credentials. User-managed (downloaded) keys are a last resort.
+- If you do use keys: up to 10 per service account so they can be rotated, and Google keeps only the public half, so a lost private key can't be recovered. Rotate and audit them.
 - Prefer one dedicated service account per app with only the roles it needs over the default Compute Engine one.
 Like what I know:
 

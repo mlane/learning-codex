@@ -11,7 +11,9 @@ What it is: Object storage (objects, not files and folders or disk blocks) for u
 - Classes by how often data is read: Standard (hot), Nearline (about monthly, 30-day minimum), Coldline (at most every 90 days, 90-day minimum), Archive (under once a year, 365-day minimum). Colder means cheaper storage, pricier retrieval, same millisecond access.
 - Objects are immutable. Versioning keeps old versions; without it, changes overwrite.
 - Access: IAM inherited project to bucket to object; ACLs where needed. Encrypted at rest and in transit by default.
-- Lifecycle rules change class or delete by age. Autoclass moves objects between classes by access pattern.
+- Lifecycle rules (Object Lifecycle Management) archive or delete by age; a new or changed rule can take up to 24 hours to take effect. Autoclass moves objects between classes by access pattern.
+- Soft delete is on by default: deleted objects stay recoverable for 7 days.
+- Directory synchronization: keep a VM directory in sync with a bucket.
 Like what I know:
 
 ## Isolate

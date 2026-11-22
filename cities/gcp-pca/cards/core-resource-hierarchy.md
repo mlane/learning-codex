@@ -7,10 +7,12 @@ lives_at: global
 ---
 
 ## Baseline
-What it is: The tree every resource sits in: organization node, then folders (optional, nestable), then projects, then resources. IAM and org policies set at any level flow down to everything below.
-- Project: the base unit for billing, enabling APIs and quotas. Project ID is globally unique and can't change after creation.
-- Folders group projects by team, department or environment.
-- Organization node: the top, tied to a Cloud Identity or Workspace domain. Holds org-wide roles like Organization Admin.
+What it is: The tree every resource sits in: organization node, then folders (optional, nestable), then projects, then resources. IAM and org policies set at any level flow down to everything below. Resource Manager is the service that manages it.
+- Project: the base unit for billing, enabling APIs and quotas. Every resource belongs to one. Project ID is globally unique and can't change after creation.
+- Folders group projects by team, department or environment. An isolation boundary between projects, and a way to delegate admin rights.
+- Organization node: the root, tied to a Cloud Identity or Workspace domain and created automatically when a user from that domain creates a project. Holds org-wide roles like Organization Admin (sets IAM policies, useful for auditing) and Project Creator.
+- Resource Manager roles per level, inherited top-down: organization (Admin, Viewer), folder (Admin, Creator, Viewer), project (Creator, Deleter).
+- Labels: key-value pairs on resources (VMs, disks, snapshots, images) for cost breakdowns and bulk scripts, e.g. by team or cost center. Network tags are different: instances only, used for firewall rules and routes.
 Like what I know:
 
 ## Isolate
