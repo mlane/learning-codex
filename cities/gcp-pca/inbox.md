@@ -41,3 +41,29 @@ SSD (solid-state drive) is the best choice for most use cases. HDD (hard-disk dr
 There is a direct relationship between the storage capacity and its throughput.
 AlloyDB for PostgreSQL is a fully managed, PostgreSQL-compatible database service that’s designed for demanding workloads such as hybrid transactional and analytical processing.
 Memorystore for Redis provides a fully managed in-memory datastore service built on scalable, secure, and highly available infrastructure managed by Google. Also automates complex tasks like enabling high availability, failover, patching, and monitoring.
+# --- Resource management
+Resource mananager lets you hierarchically manage resources by project, folder, and organization.
+Because a project accumulates the consumption of all its resources, it can be used to track resources and quota usage.
+However, regardless of the type, each resource is organized into a project.
+All resources in Google Cloud are subject to project quotas or limits.
+All resources in Google Cloud are subject to project quotas or limits (three categories).
+1. How many resources you can create per project.
+- For example, you can only have fifteen VPC networks per project.
+2. How quickly you can make API requests in a project or rate limits.
+- For example, by default, you can only make five administrative actions per second per project when using the Spanner API.
+3. How many resources you can create per region.
+- For example, by default, you can only have 24 CPUs per region.
+Why setup quotas?
+1. Project quotas prevent runaway consumption in case of error or malicious attack.
+- For example, imagine you accidentally create 100 instead of 10 Compute Engine instances using the g-cloud command line.
+2. Quotas also prevent billing spikes or surprises.
+3. Finally, quotas force sizing consideration and periodic review.
+- For example, do you really need a 96-core instance, or can you go with a smaller and cheaper alternative?
+Quotas are the max amount of resources you can create for that resource type as long as those resources are available. They don't guarantee reosurces will be available all the time (e.g. if ssd are out for that regions even if you have quota)
+Labels are a utility for organizing Google Cloud resources. Labels are key-value pairs that you can attach to your resources, like VMs, disks, snapshots and images. Labels can also be used in scripts to help analyze costs or to run bulk operations on multiple resources. Let’s go over some examples of what to use labels for: I recommend adding labels based on team or cost center to distinguish instances owned by different teams. Network tags, on the other hand, are user-defined strings that are applied to instances only and are mainly used for networking, such as applying firewall rules and custom static routes.
+Because the consumption of all resources under a project accumulates into one billing account, let’s talk billing.
+To help with project planning and controlling costs, you can set a budget.
+
+
+
+
