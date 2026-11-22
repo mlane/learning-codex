@@ -8,7 +8,7 @@ lives_at: global
 
 ## Baseline
 What it is: Everything a project's resources consume adds up into one billing account. The controls on top of that are budgets, quotas, labels and billing export.
-- Budget: set one to plan a project and keep costs under control.
+- Budget: set one to plan a project and keep costs under control. An alert at 100% only emails the billing admins; it doesn't stop spending.
 - Quotas, three kinds: how many resources per project (e.g. VPC networks), how fast you can call an API (rate limits), how many resources per region (e.g. CPUs).
 - Why quotas: stop runaway consumption from a mistake or an attack, avoid billing spikes, and force a sizing review (do I really need 96 cores?).
 - A quota is a ceiling, not a guarantee: the resource can still be unavailable (a region out of SSDs) while you have quota left.

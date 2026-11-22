@@ -11,7 +11,7 @@ Items tagged `{key}` are skill badges (access keys). `{key!}` is the required on
 ## Week 1 | 2026-11-03 | ~9h
 - [x] Attend the live session, Tuesday 13:00 to 14:30 Central
 - [x] Course: Google Cloud Fundamentals: Core Infrastructure
-- [ ] Course: Essential Google Cloud Infrastructure: Core Services
+- [x] Course: Essential Google Cloud Infrastructure: Core Services
 - [ ] Badge: Implement Load Balancing on Compute Engine {key}
 
 ## Week 2 | 2026-11-10 | ~15h
