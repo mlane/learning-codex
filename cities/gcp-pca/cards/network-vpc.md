@@ -17,6 +17,10 @@ What it is: Your private, software-defined network in Google Cloud. The VPC is g
 - External IPs are reachable from anywhere the firewall rules allow, whatever the network or zone.
 - Every network has a default route to destinations outside it. A route alone doesn't deliver a packet; a firewall rule must also allow it.
 - New projects start with a `default` auto mode network unless an organization policy prevents it.
+- Google reserves 4 addresses in every subnet (the first two and the last two), so a /29 has 4 usable, not 8.
+- RFC 1918 private ranges: 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16.
+- The default network has a /20 subnet in every region. Delete it in production and build a custom one.
+- Prefer VMs without external IPs: smaller attack surface, lower cost, lower latency. They reach out through Cloud NAT or Private Google Access.
 Like what I know:
 
 ## Isolate

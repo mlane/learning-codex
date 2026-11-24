@@ -12,6 +12,7 @@ What it is: An identity for a workload (VM, app, pipeline) instead of a person, 
 - Attach it to the VM or Cloud Run service and Google handles short-lived credentials. User-managed (downloaded) keys are a last resort.
 - If you do use keys: up to 10 per service account so they can be rotated, and Google keeps only the public half, so a lost private key can't be recovered. Rotate and audit them.
 - Prefer one dedicated service account per app with only the roles it needs over the default Compute Engine one.
+- On GKE: Workload Identity Federation for GKE gives pods an IAM identity through their Kubernetes service account. A Kubernetes service account and an IAM service account are different things until that's set up. See compute-gke.
 Like what I know:
 
 ## Isolate

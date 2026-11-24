@@ -11,6 +11,9 @@ What it is: Serverless containers, built on Knative. Deploy a container image fr
 - Pay for CPU and memory while handling requests (to the 100 ms), plus a fee per million requests. Bigger containers cost more. Minimum instances avoid cold starts.
 - Containers must be stateless. Services answer requests; jobs run tasks to completion.
 - Regional. For multi-region, put several behind a global Application Load Balancer.
+- Cold starts unacceptable: set minimum instances (2 keeps two warm). Maximum instances, CPU limit and ingress settings don't help.
+- Google's recommendation for new serverless apps, ahead of App Engine. Serverless first, then fully managed, then VMs: the further that way, the more of the security work is Google's.
+- Outgrow it and the same container image deploys to GKE.
 Like what I know:
 
 ## Isolate

@@ -9,6 +9,7 @@ lives_at: global
 ## Baseline
 What it is: A proxy in front of an app that enforces access control policies per user. The user signs in first, then IAP checks their IAM role before the request reaches the app. No VPN needed.
 - Access is decided at the application level, centrally, instead of by network firewalls.
+- Part of Google's zero trust model (BeyondCorp): no network is trusted, and every request is checked for who the user is and the context it comes from.
 Like what I know:
 
 ## Isolate

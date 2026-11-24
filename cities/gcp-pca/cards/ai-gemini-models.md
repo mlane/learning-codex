@@ -11,6 +11,10 @@ What it is: Google's family of multimodal generative AI models (text, images, au
 - Prompt types: zero-shot, one-shot, few-shot, role. Few-shot with output examples forces a structure such as custom JSON.
 - Good prompts: clear, concise, direct, with a persona and constraints.
 - Hallucinations (confident wrong output) come from missing context, too little data or dirty data. Reduce with grounding (Google Search or your own data), constraints and curated data.
+- Gemini is proprietary: closed weights, used through the API. Gemma is the open-weight family you can download and run anywhere.
+- Other model types: Imagen for text-to-image (the newer Gemini image models, "Nano Banana", also edit images), and embeddings models that turn text or images into vectors for search and RAG.
+- Gemini Cloud Assist: the assistant panel in the console for designing, operating and troubleshooting. It summarises the log entries around an error spike and suggests fixes. Gemini Code Assist: the coding assistant inside an IDE or the Cloud Shell Editor. A deliberate exam look-alike pair.
+- Names changed in October and November 2026: Gemini 4 Carbon, Neon and Hydrogen (plus Argon) replace the Pro and Flash names. Trainer expects the exam to still say Pro, Flash and Flash-Lite.
 Like what I know:
 
 ## Isolate

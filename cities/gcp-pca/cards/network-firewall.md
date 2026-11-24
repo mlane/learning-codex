@@ -15,8 +15,8 @@ What it is: Allow or deny rules that decide which traffic reaches or leaves the 
 Like what I know:
 
 ## Isolate
-Pick it when:
-Not it when (use ___ instead):
+Pick it when: Controlling which traffic reaches or leaves VMs, by IP range, protocol, port, network tag or service account.
+Not it when (use Cloud Armor instead): Filtering web requests at a load balancer: WAF rules, DDoS, blocking by country.
 
 ## Execute
 What I built: Badge lab, 2026-11-23. Two ingress rules on the default network, both targeted by network tag: one opening port 80 to the web VMs, one letting Google's health checkers (130.211.0.0/22, 35.191.0.0/16) reach the load balancer backends. Runbook: `labs/01-load-balancing-compute-engine.md`.

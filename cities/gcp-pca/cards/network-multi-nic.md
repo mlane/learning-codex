@@ -13,6 +13,8 @@ What it is: One VM with several network interfaces (NICs), each in a different V
 - NICs are set at creation only. You can't add one later, or delete one without deleting the VM.
 - Limits: up to 2 vCPUs gives 2 NICs. Above that, one NIC per vCPU, maximum 8.
 - Only nic0 gets the default route, and internal DNS resolves the VM's name to nic0. The other NICs only reach their own directly connected subnet unless you add policy routing.
+- Extra NICs don't add bandwidth: the egress cap is per VM, set by vCPU count.
+- Trainer: a self-built inspection appliance is the cheap option but yours to maintain. Managed or third-party inspection (Palo Alto and similar) is easier and costs more.
 Like what I know:
 
 ## Isolate

@@ -11,9 +11,11 @@ What it is: Takes in metrics, events and metadata from your resources and turns 
 - Metrics scope: one scoping project holds the custom dashboards, alerting policies, uptime checks, notification channels and groups for every project it monitors. The scope takes that project's name.
 - Uptime checks: test a public service from locations around the world over HTTP, HTTPS or TCP. Every minute with a 10-second timeout in the lecture's example; both are adjustable.
 - Alerting: when a condition is met, it notifies by email, SMS, webhook, Pub/Sub or a third-party service. It can also warn before Observability usage itself hits a billing threshold. Fewer, actionable alerts are what reduce alert fatigue.
-- Ops Agent: the hypervisor can't see inside a VM (memory usage, for one), so the agent runs in the VM and collects it. Primary agent for Compute Engine telemetry.
+- Ops Agent: the hypervisor can't see inside a VM (memory and disk usage, for two), so the agent runs in the VM and collects it. Primary agent for Compute Engine telemetry and Google's recommended one. A single install collects system metrics plus logs and metrics from third-party software (Apache, MySQL). It replaces the legacy Stackdriver logging and monitoring agents. Stackdriver is the company Google bought; the name still shows up in APIs.
 - Custom metrics: send an app-level number (current users) straight to Monitoring instead of guessing from CPU or network load. An autoscaler can hold it at a utilization target, adding VMs above it and removing them below.
 - Same suite: Error Reporting counts and groups errors in running services. Cloud Trace shows request latency and how requests travel through the app. Cloud Profiler finds CPU- or memory-heavy functions.
+- Managed Service for Prometheus: keep an existing Prometheus setup and its PromQL queries, with Google running the backend. The answer for "migrate Prometheus without rewriting queries".
+- PromQL is now the query language in Metrics Explorer. MQL (Monitoring Query Language) is deprecated: no new MQL charts or alerts from the console, existing ones keep working.
 Like what I know:
 
 ## Isolate
