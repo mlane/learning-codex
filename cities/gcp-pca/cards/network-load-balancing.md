@@ -19,6 +19,13 @@ Pick it when: HTTP(S) apps, content-based routing, TLS termination, global users
 Not it when (use a Network LB instead): Non-HTTP traffic (TCP/UDP), or the backend needs the client's IP or must terminate TLS itself (passthrough).
 
 ## Execute
-What I built:
+What I built: Badge lab, 2026-11-23. Two load balancers in front of Apache VMs, all from the CLI. Runbook: `labs/01-load-balancing-compute-engine.md`.
+- Passthrough Network LB (regional): static IP, legacy HTTP health check, target pool of 3 VMs, forwarding rule.
+- Application LB (global): template, managed instance group, health-check firewall, global IP, health check, backend service, URL map, HTTP proxy, forwarding rule.
+
+```bash
+gcloud compute forwarding-rules list
+gcloud compute backend-services get-health web-backend-service --global
+```
 
 ## Missed
