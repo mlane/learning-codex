@@ -7,7 +7,11 @@ lives_at:
 ---
 
 ## Baseline
-What it is:
+What it is: Allow or deny rules that decide which traffic reaches or leaves the VMs in a VPC network.
+- A rule belongs to one network. A new custom network has no allow rules, so nothing gets in until you add one.
+- A rule applies to all instances in the network, or only to those with a given network tag or service account.
+- One rule can carry several protocols and ports (`icmp,tcp:22,tcp:3389`), or you can split them across rules.
+- A route isn't enough on its own: the firewall must also allow the packet.
 Like what I know:
 
 ## Isolate
@@ -23,5 +27,7 @@ gcloud compute firewall-rules create fw-allow-health-check \
   --source-ranges=130.211.0.0/22,35.191.0.0/16 \
   --target-tags=allow-health-check --rules=tcp:80
 ```
+
+Course lab, 2026-11-23. One rule per custom network allowing ICMP, SSH and RDP from anywhere to every instance in it. Commands are on the `network-vpc` card.
 
 ## Missed
