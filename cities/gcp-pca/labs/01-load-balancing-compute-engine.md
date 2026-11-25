@@ -242,6 +242,7 @@ gcloud compute instance-groups managed list-instances lb-backend-group --zone $Z
 | "already exists" | You ran it twice. Move on. |
 | "event not found" | Startup script was in double quotes; use single quotes |
 | Progress check fails but everything exists | Wrong region or zone, or a typo in a resource name |
+| Progress check still fails after confirming names, zone and network with `gcloud compute instances list` | The checker is lagging. Carry on and re-click it later. |
 
 ## Sandbox knobs
 

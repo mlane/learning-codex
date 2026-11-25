@@ -9,6 +9,7 @@ lives_at: global
 ## Baseline
 What it is: Your private, software-defined network in Google Cloud. The VPC is global; subnets are regional and span all zones in their region, so one subnet can hold VMs in several zones.
 - Auto mode: one subnet per region made for you. Custom mode: you choose subnets and ranges (recommended for production).
+- Auto mode subnets all come from 10.128.0.0/9. When a new region opens, a subnet from that block is added automatically.
 - Routes and a distributed firewall are built in; no appliances to provision.
 - Subnet ranges can be expanded without downtime, not shrunk.
 - Firewall rules target VMs by network tag or service account.

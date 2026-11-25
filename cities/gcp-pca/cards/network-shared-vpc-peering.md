@@ -21,7 +21,11 @@ VPC Network Peering (decentralized):
 - Both sides must create a peering configuration; nothing connects until each has one for the other. Needs the Network Admin role, plus the other network's name and, if it's elsewhere, its project ID.
 - Each network keeps its own firewall rules, routes and admins. Firewall rules on each side still decide what traffic passes.
 - Subnet routes are exchanged automatically. Custom and dynamic routes (from VPN or Interconnect) only move if one side exports and the other imports. Local routes win over routes learned through peering.
+- A peering shows INACTIVE until the matching configuration exists on the other side, then ACTIVE.
+- Deleting one side ends the whole peering: the other side drops to INACTIVE and all peering routes disappear.
+- Compute Engine internal DNS names don't work across peered networks. Reach the VM by its IP.
 - Avoids the latency, security and cost drawbacks of external IPs or VPNs.
+- The cost part: traffic between external IPs is charged as egress even inside the same zone. Peered networks use internal IPs and avoid that; normal network pricing still applies.
 - Works with Compute Engine, GKE and App Engine flexible.
 - You can peer with a Shared VPC network, and peer two Shared VPC networks with each other.
 Like what I know:
@@ -32,6 +36,16 @@ Not it when (use VPC Network Peering instead): Connecting networks owned by diff
 - One network reaching services in two other organizations over internal IPs: peer with each directly. Those two still can't reach each other through it.
 
 ## Execute
-What I built:
+What I built: Course lab, 2026-11-24. Peered `mynetwork` and `privatenet` in one project with `peering-1-2` and `peering-2-1`. Before: from `mynet-us-vm`, the external IP of `privatenet-us-vm` answered a ping, the internal IP gave 100% loss. After both sides were ACTIVE: internal pings worked both ways and Routes showed the peering as next hop for each subnet, but `ping mynet-us-vm` by name failed. Deleted `peering-1-2`: the other side went INACTIVE, the routes vanished and the internal ping failed again. Built in the console; the CLI form below is not yet run.
+
+```bash
+gcloud compute networks peerings create peering-1-2 \
+  --network=mynetwork --peer-network=privatenet
+gcloud compute networks peerings create peering-2-1 \
+  --network=privatenet --peer-network=mynetwork
+
+gcloud compute networks peerings list
+gcloud compute networks peerings delete peering-1-2 --network=mynetwork
+```
 
 ## Missed
