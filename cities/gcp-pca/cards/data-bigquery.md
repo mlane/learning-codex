@@ -28,4 +28,6 @@ GROUP BY service.description
 ORDER BY total_cost DESC
 ```
 
+Course lab, 2026-11-24. Queried VPC Flow Logs that a Cloud Logging sink wrote into a dataset, to rank source IPs by bytes sent to a web server. Query is on the `ops-logging` card.
+
 ## Missed

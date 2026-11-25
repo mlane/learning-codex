@@ -22,6 +22,15 @@ What it is: Your private, software-defined network in Google Cloud. The VPC is g
 - RFC 1918 private ranges: 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16.
 - The default network has a /20 subnet in every region. Delete it in production and build a custom one.
 - Prefer VMs without external IPs: smaller attack surface, lower cost, lower latency. They reach out through Cloud NAT or Private Google Access.
+
+VPC Flow Logs:
+- Record traffic to and from VMs. Off by default; turned on per subnet.
+- Each entry carries the connection's five values: source IP and port, destination IP and port, and the IANA protocol number. Plus bytes sent and which end reported it (`SRC` or `DEST`).
+- No performance impact, but busy systems produce a lot of logs, and that costs money.
+- Three knobs trade visibility for cost. Aggregation interval: 5 sec (default), 30 sec, 1, 5, 10 or 15 min. Sampling: 0.5 by default, from 1.0 (keep all) to 0.0 (keep none). Metadata annotations (VM names, region of external addresses): on by default, can be turned off.
+- Going from 5-second to 30-second aggregation can cut log size by up to 83%.
+- Uses: see where an app is accessed from to cut network cost, decide where a global load balancer helps, find IPs to block with Cloud Armor.
+- They land in Cloud Logging as `vpc_flows` under the Subnetwork resource. See `ops-logging` for export.
 Like what I know:
 
 ## Isolate
@@ -47,6 +56,15 @@ gcloud compute networks list
 gcloud compute networks subnets list --sort-by=NETWORK
 gcloud compute firewall-rules list --sort-by=NETWORK
 gcloud compute instances list --sort-by=ZONE
+```
+
+Course lab, 2026-11-24. Custom network `vpc-net` with one subnet (`vpc-subnet`, 10.1.3.0/24) and Flow Logs on, then changed the subnet to 30-second aggregation and 25% sampling. The rest of the lab is on the `ops-logging` card. Built in the console; the CLI form below is not yet run.
+
+```bash
+gcloud compute networks subnets update vpc-subnet --region=$REGION \
+  --enable-flow-logs \
+  --logging-aggregation-interval=interval-30-sec \
+  --logging-flow-sampling=0.25
 ```
 
 ## Missed
