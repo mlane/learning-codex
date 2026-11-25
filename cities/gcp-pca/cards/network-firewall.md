@@ -12,6 +12,7 @@ What it is: Allow or deny rules that decide which traffic reaches or leaves the 
 - A rule applies to all instances in the network, or only to those with a given network tag or service account.
 - One rule can carry several protocols and ports (`icmp,tcp:22,tcp:3389`), or you can split them across rules.
 - A route isn't enough on its own: the firewall must also allow the packet.
+- Firewall Rules Logging records the connections a rule allowed or denied. Firewall Insights needs it turned on: see `network-intelligence-center`.
 Like what I know:
 
 ## Isolate

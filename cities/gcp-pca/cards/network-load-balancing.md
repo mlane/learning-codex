@@ -12,6 +12,7 @@ What it is: Managed, software-defined load balancing; no VMs to run. Health chec
 - Network LB, proxy: layer 4 TCP (optional SSL offload); terminates connections.
 - Network LB, passthrough: layer 4 TCP/UDP; doesn't terminate connections and keeps the client's IP. Regional.
 - Backends: instance groups, or network endpoint groups for GKE, Cloud Run and other serverless.
+- Target pool: a group of Compute Engine instances that receives traffic from a load balancer. The older backend type for passthrough Network LBs, as in the badge lab.
 Like what I know:
 
 ## Isolate

@@ -24,13 +24,20 @@ What it is: Your private, software-defined network in Google Cloud. The VPC is g
 - Prefer VMs without external IPs: smaller attack surface, lower cost, lower latency. They reach out through Cloud NAT or Private Google Access.
 
 VPC Flow Logs:
-- Record traffic to and from VMs. Off by default; turned on per subnet.
+- Record a sample of traffic to and from VMs. Off by default; turned on per subnet in the lecture and labs. Current docs also allow a whole network or organization, VLAN attachments and VPN tunnels.
+- VM to VM inside one VPC is recorded from both ends, but only if both subnets have Flow Logs on.
 - Each entry carries the connection's five values: source IP and port, destination IP and port, and the IANA protocol number. Plus bytes sent and which end reported it (`SRC` or `DEST`).
 - No performance impact, but busy systems produce a lot of logs, and that costs money.
 - Three knobs trade visibility for cost. Aggregation interval: 5 sec (default), 30 sec, 1, 5, 10 or 15 min. Sampling: 0.5 by default, from 1.0 (keep all) to 0.0 (keep none). Metadata annotations (VM names, region of external addresses): on by default, can be turned off.
 - Going from 5-second to 30-second aggregation can cut log size by up to 83%.
 - Uses: see where an app is accessed from to cut network cost, decide where a global load balancer helps, find IPs to block with Cloud Armor.
-- They land in Cloud Logging as `vpc_flows` under the Subnetwork resource. See `ops-logging` for export.
+- They land in Cloud Logging as `vpc_flows` under the Subnetwork resource. See `ops-logging` for export, `network-intelligence-center` for Flow Analyzer (no SQL).
+- Packet Mirroring is the other tool: it clones all traffic of chosen VMs, payloads and headers included, and forwards it to security software for inspection. Not sampled. The mirroring happens on the VM, so it uses extra bandwidth there. Flow Logs = sampled metadata; Packet Mirroring = full packets.
+
+Moving a VM to another network:
+- The VM must be stopped. It stays in its region and zone; only the attached network changes.
+- Supported: legacy network to VPC, VPC to VPC, or subnet to subnet in one network, all in the same project. Never into a legacy network.
+- Not while it's in an instance group or NEG: take it out of an unmanaged group or NEG first. A VM in a managed instance group can't be moved at all; build a new MIG from a new template.
 Like what I know:
 
 ## Isolate
