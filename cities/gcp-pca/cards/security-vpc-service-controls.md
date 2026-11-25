@@ -11,7 +11,11 @@ What it is: A service perimeter around projects and the Google-managed services 
 - IAM decides who. VPC Service Controls decides from where: stolen credentials used from outside the perimeter don't work.
 - Access levels and ingress and egress rules open controlled paths across. Dry-run mode tests a perimeter before enforcing it.
 - Trainer: one of the fundamentals to know.
-Like what I know:
+- It works alongside IAM, not instead of it: a request must pass both.
+- Access levels come from Access Context Manager (IP range, device state, identity).
+- On-prem can sit inside a perimeter by reaching the APIs through `restricted.googleapis.com` over VPN or Interconnect.
+- Usual breakage: a perimeter blocks a service account or console user that worked before. Run dry-run first and read the violation logs.
+Like what I know: A Content Security Policy for Google APIs. CSP lists which origins a page may talk to; a perimeter lists which networks and projects may call the API.
 
 ## Isolate
 Pick it when: The worry is data leaving: exfiltration from managed services, or a compliance boundary around sensitive data.

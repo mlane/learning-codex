@@ -20,7 +20,11 @@ What it is: Takes in metrics, events and metadata from your resources and turns 
 - Same suite: Error Reporting counts and groups errors in running services. Cloud Trace shows request latency and how requests travel through the app. Cloud Profiler finds CPU- or memory-heavy functions.
 - Managed Service for Prometheus: keep an existing Prometheus setup and its PromQL queries, with Google running the backend. The answer for "migrate Prometheus without rewriting queries".
 - PromQL is now the query language in Metrics Explorer. MQL (Monitoring Query Language) is deprecated: no new MQL charts or alerts from the console, existing ones keep working.
-Like what I know:
+- What to watch on any service, the four golden signals: latency, traffic, errors, saturation.
+- SLO monitoring: define an SLO on a service and alert on how fast the error budget burns. See `ops-sre-slos`.
+- Alerting strategy (exam guide 6.2): alert on symptoms users feel, not on every cause; page for the urgent, open a ticket for the rest.
+- Case study hooks: EHR Healthcare has open source tools and email alerts that get ignored (centralise here, with real notification channels). Cymbal Retail runs Grafana, Nagios and Elastic; Managed Service for Prometheus keeps PromQL and Grafana dashboards working.
+Like what I know: Real-user monitoring and uptime dashboards (Datadog, Grafana): Web Vitals, but for servers.
 
 ## Isolate
 Pick it when: The question is whether something is up, healthy or fast enough: metrics, uptime checks, dashboards, alerts.

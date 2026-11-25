@@ -15,7 +15,7 @@ What it is: One VM with several network interfaces (NICs), each in a different V
 - Only nic0 gets the default route, and internal DNS resolves the VM's name to nic0. The other NICs only reach their own directly connected subnet unless you add policy routing.
 - Extra NICs don't add bandwidth: the egress cap is per VM, set by vCPU count.
 - Trainer: a self-built inspection appliance is the cheap option but yours to maintain. Managed or third-party inspection (Palo Alto and similar) is easier and costs more.
-Like what I know:
+Like what I know: A laptop on Wi-Fi and Ethernet at once: one machine, a leg in two networks.
 
 ## Isolate
 Pick it when: One VM must act as a network appliance or gateway between networks (firewall, IDS/IPS, WAF, load balancer), or the scenario wants strong traffic separation such as management plane versus data plane.

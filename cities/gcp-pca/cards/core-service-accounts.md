@@ -13,7 +13,11 @@ What it is: An identity for a workload (VM, app, pipeline) instead of a person, 
 - If you do use keys: up to 10 per service account so they can be rotated, and Google keeps only the public half, so a lost private key can't be recovered. Rotate and audit them.
 - Prefer one dedicated service account per app with only the roles it needs over the default Compute Engine one.
 - On GKE: Workload Identity Federation for GKE gives pods an IAM identity through their Kubernetes service account. A Kubernetes service account and an IAM service account are different things until that's set up. See compute-gke.
-Like what I know:
+- Kinds: user-managed (you create it), default (auto-created for Compute Engine and App Engine, historically with the Editor role, which is too broad), and service agents (Google's own services acting inside your project).
+- Impersonation: grant Service Account Token Creator so a user or another service account gets short-lived credentials as this one. No key leaves Google.
+- An org policy can forbid key creation outright (`iam.disableServiceAccountKeyCreation`).
+- Access scopes on a VM are the legacy limiter. Set the scope to cloud-platform and control access with IAM roles.
+Like what I know: A bot account or deploy token for CI: an identity for a machine rather than a person.
 
 ## Isolate
 Pick it when: Code or a machine needs to call Google Cloud APIs without a person signed in.

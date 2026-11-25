@@ -28,7 +28,13 @@ VPC Network Peering (decentralized):
 - The cost part: traffic between external IPs is charged as egress even inside the same zone. Peered networks use internal IPs and avoid that; normal network pricing still applies.
 - Works with Compute Engine, GKE and App Engine flexible.
 - You can peer with a Shared VPC network, and peer two Shared VPC networks with each other.
-Like what I know:
+
+From the Elastic Infrastructure lecture:
+- Vocabulary: a project in a Shared VPC setup is a host project or a service project. One that is neither is a standalone project, and an unshared network is a standalone VPC network.
+- Shared VPC is the centralised model: security and network policy live in one designated network. Peering is the decentralised one: each network keeps its own admins, firewall and routing tables.
+- Forced choices: different organizations, or two VPCs in the same project, means peering. Shared VPC only works across projects within one organization.
+- When peering runs out (not transitive, per-network peering limits): Network Connectivity Center with VPC spokes gives hub and spoke between many VPCs.
+Like what I know: Shared VPC: one platform team owns the shared config in a monorepo and product teams build inside it. Peering: two separate repos that agree to consume each other's packages.
 
 ## Isolate
 Pick it when: One organization wants central control of the network across many projects: Shared VPC.

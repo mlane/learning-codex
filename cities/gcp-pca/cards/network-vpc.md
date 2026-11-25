@@ -38,7 +38,12 @@ Moving a VM to another network:
 - The VM must be stopped. It stays in its region and zone; only the attached network changes.
 - Supported: legacy network to VPC, VPC to VPC, or subnet to subnet in one network, all in the same project. Never into a legacy network.
 - Not while it's in an instance group or NEG: take it out of an unmanaged group or NEG first. A VM in a managed instance group can't be moved at all; build a new MIG from a new template.
-Like what I know:
+
+Routes and address planning:
+- Route types: subnet routes and the default route (created for you), custom static routes, dynamic routes learned by Cloud Router. The most specific destination wins, then priority.
+- Plan CIDR ranges before connecting anything: overlapping ranges block VPC peering and break VPN and Interconnect routing with on-prem.
+- Secondary (alias) IP ranges on a subnet give VMs extra addresses; GKE uses them for pods and services.
+Like what I know: The office LAN, defined in software: private IP ranges, subnets, a routing table and a firewall, with no hardware to touch.
 
 ## Isolate
 Pick it when: Every workload needs one. The design question is how many VPCs and which subnets.

@@ -14,7 +14,11 @@ What it is: Who secures what, and which standards the platform helps you meet.
 - Needs extra work from you: HIPAA (healthcare APIs and services help) and FedRAMP.
 - No separate government regions, unlike AWS and Azure. Assured Workloads applies compliance controls inside the standard regions.
 - Zero trust (BeyondCorp) pieces to recognise: IAP, VPC Service Controls, Sensitive Data Protection, Cloud Armor, Security Command Center.
-Like what I know:
+- Regulations by case study: GDPR for EU personal data (KnightMotives names EU data protection); HIPAA for US health data (EHR Healthcare; needs a Business Associate Agreement with Google and only covered services); PCI DSS for card data (retail). The exam guide also lists children's privacy (COPPA) and uses SOC 2 as its example certification.
+- Data residency toolkit: region choice, the resource locations org policy, Assured Workloads, CMEK or external keys, VPC Service Controls.
+- Audit evidence: Cloud Audit Logs for what your people did, Access Transparency for what Google staff did, Access Approval to require your sign-off before they do it. Google's own audit reports come from Compliance Reports Manager.
+- Stricter sovereignty: Google Distributed Cloud for an air-gapped or on-prem deployment.
+Like what I know: Using a hosted auth provider: they secure the platform, and I'm still responsible for how I configure and use it.
 
 ## Isolate
 Pick it when: The scenario names a regulation (HIPAA, PCI DSS, FedRAMP) or a data residency rule. Start from what Google already covers, then add the controls that are yours.

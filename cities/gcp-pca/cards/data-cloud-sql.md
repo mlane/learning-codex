@@ -14,7 +14,13 @@ What it is: Fully managed relational database: MySQL, PostgreSQL, SQL Server. Go
 - Sizing: shared-core machines are for prototyping and aren't covered by the SLA. For OLTP, give it enough memory to hold the whole working set plus the active connections. More vCPUs raise the network throughput cap.
 - Storage: SSD suits most cases. HDD (Enterprise edition only) is slower but cheaper, for rarely accessed data that doesn't need low latency. Disk throughput grows with storage capacity.
 - Database Center: one dashboard for health, security and performance issues across the whole database fleet (Cloud SQL, AlloyDB, Spanner, Bigtable, Firestore, Memorystore), across projects. The database counterpart of Security Command Center.
-Like what I know:
+- Backups: automated daily plus on demand. Point-in-time recovery replays the logs to any moment in the retention window. That is how you undo a bad write or a dropped table; HA faithfully copies the mistake to the standby.
+- Connecting: private IP (through private services access) from anything in the VPC. The Cloud SQL Auth Proxy and the language connectors give encrypted, IAM-authorised connections with no certificates or IP allowlists to manage.
+- Editions: Enterprise, and Enterprise Plus (99.99% SLA, near-zero downtime maintenance, faster failover).
+- Maintenance windows and deny periods control when Google patches.
+- Ceilings that push toward Spanner: storage tops out at 64 TB and there is one writer.
+- Moving an existing database in with little downtime: Database Migration Service, see `migrate-database-migration`.
+Like what I know: The MySQL or PostgreSQL behind an ordinary web app, with the DBA chores handed to Google. AWS RDS.
 
 ## Isolate
 Pick it when: A standard relational workload (web app, CRM, ERP), often a lift-and-shift of an existing MySQL, PostgreSQL or SQL Server database running on a single machine.

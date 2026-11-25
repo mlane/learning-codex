@@ -11,7 +11,10 @@ What it is: Serverless data processing for streaming and batch pipelines. It run
 - One model for streaming and batch, so it fits almost any ETL (extract, transform, load) pipeline.
 - Google's default recommendation for new pipelines.
 - Typical shape: Pub/Sub in, Dataflow in the middle, BigQuery or Bigtable out.
-Like what I know:
+- Streaming words to recognise: windows (group events by time), watermarks and triggers (how late data is handled), exactly-once processing.
+- Templates, Google's or your own, run common pipelines without writing code, e.g. Pub/Sub to BigQuery.
+- Look-alikes: Managed Service for Apache Spark (Dataproc) for Spark and Hadoop, Cloud Data Fusion for visual no-code ETL, Cloud Composer (managed Airflow) to orchestrate jobs across services, Dataform for SQL transformations inside BigQuery.
+Like what I know: RxJS operators (map, filter, window, merge) applied to a distributed stream instead of UI events.
 
 ## Isolate
 Pick it when: A new ETL or streaming pipeline with no existing Spark or Hadoop code to keep.

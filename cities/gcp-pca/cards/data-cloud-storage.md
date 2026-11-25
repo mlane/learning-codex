@@ -14,7 +14,15 @@ What it is: Object storage (objects, not files and folders or disk blocks) for u
 - Lifecycle rules (Object Lifecycle Management) archive or delete by age; a new or changed rule can take up to 24 hours to take effect. Autoclass moves objects between classes by access pattern.
 - Soft delete is on by default: deleted objects stay recoverable for 7 days.
 - Directory synchronization: keep a VM directory in sync with a bucket.
-Like what I know:
+- Location trade-off: region (cheapest, next to the compute), dual-region (two regions you choose, survives losing one; turbo replication for a 15-minute RPO), multi-region (spread over a continent, for serving).
+- Deleting or moving an object before its class's minimum duration is charged as if it had stayed the full time.
+- Retention policy plus bucket lock makes objects undeletable for a set period (compliance, write once read many). Object holds do it per object.
+- Signed URLs give time-limited access to one object without a Google account. Public access prevention stops a bucket being made public by accident.
+- CMEK when you must control the key.
+- CLI: `gcloud storage` replaces `gsutil` (the exam guide still names gsutil).
+- Static website: bucket as a backend bucket behind an Application LB with Cloud CDN.
+- Cloud Storage FUSE mounts a bucket like a folder, common for AI training data. It is not a real file system (no locking, slow renames).
+Like what I know: Amazon S3. The bucket behind static site hosting and user uploads.
 
 ## Isolate
 Pick it when: Unstructured objects of any size: media, backups, archives, data lake files, static website assets.

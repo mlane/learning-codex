@@ -18,7 +18,12 @@ What it is: Who (principal) can do what (role) on which resource. Roles are bund
 - Organization restrictions (not Organization Policy): stops data exfiltration through phishing or insiders. An egress proxy adds a header to requests from managed devices so they only reach approved organizations.
 - Exam reflex: IAM is Google's preferred way to control access. Uniform bucket-level access over ACLs, IAM roles and gcloud when SSH is blocked, an Artifact Registry role for image pulls. An option that bypasses IAM checks is wrong.
 - Common real-world failures (OWASP Top 10 2025, first and second): broken access control and security misconfiguration. Default service accounts, the default VPC and broad roles kept "for now".
-Like what I know:
+- Service account impersonation: a person or workload borrows a service account's identity through a short-lived token instead of holding its key. Needs Service Account Token Creator. In the exam guide under secure remote access.
+- IAM Conditions: a binding that applies only when a condition holds (a time window, a resource name prefix, an access level).
+- Separation of duties: split roles so nobody can both make and approve a change. The key admin doesn't read the data; billing admins aren't project owners.
+- Audit: Cloud Audit Logs record who did what. Admin Activity logs are always on; Data Access logs are off by default (except BigQuery) and must be turned on.
+- Tools: Policy Troubleshooter (why was this allowed or denied), Policy Analyzer (who can reach what), IAM recommender (roles nobody has used in 90 days).
+Like what I know: Route guards and role-based permissions in a web app: the user carries roles, each role unlocks a set of actions, and the check happens on every request.
 
 ## Isolate
 Pick it when: A predefined role covers the job. That's Google's default recommendation for least privilege.

@@ -3,7 +3,7 @@ name: Firewall rules and policies
 district: network
 threat: 2
 threat_source: estimate
-lives_at:
+lives_at: global (per VPC network)
 ---
 
 ## Baseline
@@ -13,7 +13,14 @@ What it is: Allow or deny rules that decide which traffic reaches or leaves the 
 - One rule can carry several protocols and ports (`icmp,tcp:22,tcp:3389`), or you can split them across rules.
 - A route isn't enough on its own: the firewall must also allow the packet.
 - Firewall Rules Logging records the connections a rule allowed or denied. Firewall Insights needs it turned on: see `network-intelligence-center`.
-Like what I know:
+- Every VPC has two implied rules that can't be deleted: deny all ingress and allow all egress, at the lowest priority (65535). Everything else is yours.
+- Priority runs 0 to 65535 and the lowest number wins; a new rule defaults to 1000. Stateful: once a connection is allowed one way, its replies are allowed automatically.
+- The `default` network ships with allow rules for internal traffic, SSH, RDP and ICMP. Fine for a lab, too open for production.
+- Ranges to remember: load balancer health checks come from 130.211.0.0/22 and 35.191.0.0/16; IAP's SSH and RDP tunnelling comes from 35.235.240.0/20.
+- Firewall policies are the newer model. Hierarchical firewall policies attach to the organization or a folder and apply to every VPC below, so a central team sets rules projects can't override (named in the exam guide). Network firewall policies (global or regional) attach to one VPC. Default order: hierarchical policies, then VPC firewall rules, then network firewall policies.
+- Secure tags (governed by IAM) replace network tags in policies. Anyone who can edit a VM can add a network tag; a secure tag needs a permission.
+- Cloud Next Generation Firewall tiers: Essentials (the rules above), Standard (adds FQDN and geolocation objects and threat intelligence lists), Enterprise (adds intrusion prevention with TLS inspection). The exam guide's 'intrusion protection'.
+Like what I know: AWS security groups, or an allowlist on a server: closed by default, open specific ports to specific sources.
 
 ## Isolate
 Pick it when: Controlling which traffic reaches or leaves VMs, by IP range, protocol, port, network tag or service account.

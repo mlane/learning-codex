@@ -14,7 +14,14 @@ What it is: Fully managed service to store, search, analyze, monitor and alert o
 - A sink is how the export is set up: a filter plus a destination. Built from Logs Explorer with Actions > Create Sink.
 - A sink only sends entries that arrive after it was created. Earlier logs are not copied over.
 - In Logs Explorer you narrow by resource (Subnetwork) and log name (`vpc_flows`), then add text such as an IP address on a new line of the query.
-Like what I know:
+- Log buckets: `_Required` holds Admin Activity and System Event audit logs for 400 days, free and unchangeable. `_Default` holds the rest for 30 days. Custom buckets set their own retention and region.
+- Audit log types: Admin Activity (always on), Data Access (off by default except BigQuery; can be large and costly), System Event, Policy Denied.
+- Centralised logging: an aggregated sink at folder or organization level collects from every project below into one destination.
+- Destination by purpose: Cloud Storage for cheap long retention, BigQuery for analysis, Pub/Sub to stream to a SIEM or other tool, another log bucket to centralise.
+- Exclusion filters drop noisy logs before they're stored and billed. Log-based metrics turn matching entries into a metric to alert on.
+- Log Analytics runs SQL over a log bucket without exporting it.
+- Tamper-proof audit trail: a locked retention policy on the bucket.
+Like what I know: console.log for the whole platform, collected in one searchable place. Sentry or a log drain, built in.
 
 ## Isolate
 Pick it when: You need to search, keep or audit what happened: application and system logs, with export for long-term storage or analysis.

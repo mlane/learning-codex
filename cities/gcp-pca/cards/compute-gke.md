@@ -40,7 +40,16 @@ Network and operations:
 - Release channels: Rapid, Regular, Stable. Production on Regular or Stable. Upgrade and release notifications can go to a Pub/Sub topic and fan out from there.
 - Separate environments (at least pre-production and production), each tied to a suitable release channel.
 - Service mesh (Istio; Google's managed one is Cloud Service Mesh): sidecar proxies handle traffic policy, security and telemetry between services, set once at mesh level. Anthos no longer exists as a brand; multi-cluster management is now GKE fleets.
-Like what I know:
+
+More to recognise:
+- Node scaling: cluster autoscaler adds or removes nodes; node auto-provisioning creates whole node pools to fit pending pods. HPA and VPA act on pods, these act on nodes.
+- State: a PersistentVolumeClaim asks for a disk; a StatefulSet gives each replica a stable name and its own volume (databases, queues). Deployments are for stateless pods.
+- Exposing apps: Service types ClusterIP (inside the cluster only), NodePort, LoadBalancer (a passthrough Network LB). Ingress or the Gateway API creates an Application LB for HTTP routing. Container-native load balancing sends traffic straight to pods through NEGs.
+- Network policies restrict pod-to-pod traffic: a firewall inside the cluster.
+- Binary Authorization: only images signed (attested) by your pipeline can be deployed. The software supply chain control.
+- Several regions: a multi-cluster Gateway puts one global load balancer in front of clusters in different regions. Backup for GKE backs up workloads and their volumes.
+- Case study hook (EHR Healthcare): existing Kubernetes on-prem that must run the same way as the cloud. GKE with fleets, attached or on-prem clusters, and Config Sync to keep configuration identical.
+Like what I know: Docker Compose grown up. I declare the desired state in YAML and a controller keeps reality matching it, the way React reconciles the DOM to the declared UI.
 
 ## Isolate
 Pick it when: Many containerized services that need Kubernetes features: custom networking, stateful workloads, sidecars, or portability to other Kubernetes environments (hybrid, multicloud).

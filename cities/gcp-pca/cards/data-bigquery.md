@@ -12,7 +12,15 @@ What it is: Data warehouse that stores data and gives an interactive SQL interfa
 - Loads files from Cloud Storage (e.g. Avro) and builds the schema from what it finds in the file.
 - In a query, dataset ID and table ID are required. Project ID is optional and defaults to the current project.
 - Cloud Billing can export straight to BigQuery for cost analysis.
-Like what I know:
+- Serverless: storage and compute are separate and billed separately. Compute is on-demand (per TB scanned) or capacity-based (reserved slots).
+- Cheaper, faster queries: partition tables (usually by date), cluster them, select only the columns needed, never SELECT * on a big table.
+- Getting data in as it happens: the Storage Write API, a Pub/Sub BigQuery subscription, or Dataflow.
+- Query without loading: external tables over Cloud Storage files, and federated queries to Cloud SQL and Spanner.
+- BigQuery ML trains and runs models in SQL and can call Gemini over table rows. BI tools sit on top for dashboards.
+- Access: IAM at project, dataset and table level, plus column-level and row-level security. An authorized view shares a query result without exposing the tables behind it.
+- Time travel recovers table data from the last 7 days.
+- Sharing or selling data (KnightMotives wants to monetize data): BigQuery sharing, formerly Analytics Hub, publishes datasets without copying them.
+Like what I know: SQL I already know, pointed at an analytics-sized dataset, with no server to size or index to tune.
 
 ## Isolate
 Pick it when: SQL analytics over a large dataset: reporting, a data warehouse, digging through billing data.

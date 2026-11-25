@@ -12,7 +12,11 @@ What it is: Ways for resources with only internal IPs to reach services privatel
 - Private Service Connect: an endpoint with an internal IP inside your own VPC that leads to one service, either Google APIs or a service published from another VPC (Google's, a vendor's or another team's).
 - Private services access: a private connection (VPC peering underneath) to Google-managed services that live in a VPC, such as Cloud SQL and Memorystore.
 - The comparison table is "Private access options for services" in the VPC docs (the trainer's link).
-Like what I know:
+- Private Google Access changes nothing for a VM that has an external IP; it already reaches Google APIs.
+- From on-prem: route `private.googleapis.com` (199.36.153.8/30), or `restricted.googleapis.com` (199.36.153.4/30, only services VPC Service Controls supports), over VPN or Interconnect.
+- Private Service Connect in producer and consumer terms: the producer publishes a service attachment, the consumer creates an endpoint (an internal IP) in their own VPC. No peering, so overlapping IP ranges don't matter and nothing else in either network is exposed. Named in the exam guide.
+- Serverless reaching into a VPC is a different thing again: Direct VPC egress or Serverless VPC Access.
+Like what I know: Calling an internal API over the corporate network instead of through its public URL.
 
 ## Isolate
 Pick it when: VMs without external IPs only need Google APIs: Private Google Access.

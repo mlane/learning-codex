@@ -14,7 +14,7 @@ What it is: One console for seeing, monitoring and troubleshooting the Google Cl
 - Firewall Insights: how firewall rules are actually used: hit counts, unused or shadowed rules, connections blocked by mistake. Needs Firewall Rules Logging on.
 - Network Analyzer: runs continuously, finds misconfigurations by itself, ties a failure to a recent config change and suggests a fix. Lecture example: a firewall rule blocking GKE nodes from the control plane.
 - Flow Analyzer: explore VPC Flow Logs by the five connection values without writing SQL. Built on Log Analytics and BigQuery.
-Like what I know:
+Like what I know: The Network tab in browser DevTools, for the cloud network: see what went where and where it stopped.
 
 ## Isolate
 Pick it when: The question is why network traffic isn't arriving, whether a network change is safe, or whether firewall rules are doing what was intended. Match the module to the question.

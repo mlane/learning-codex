@@ -11,7 +11,9 @@ What it is: Managed Apache Spark and Hadoop. Dataproc was renamed Managed Servic
 - Two deployments. Clusters (the old Dataproc on Compute Engine): you size the cluster and pay while it's up. Serverless: submit a Spark job and pay for its runtime.
 - Runs the Hadoop ecosystem: Spark, Hadoop, Hive, Pig.
 - Trainer: the serverless option blurs the old "Dataflow, because there's no cluster" reasoning in practice. For the exam, Dataflow is still the default for new pipelines and this is the migration answer.
-Like what I know:
+- Cost pattern: ephemeral clusters. Start a cluster for the job, keep the data in Cloud Storage instead of HDFS, delete the cluster afterwards. Spot VMs for the secondary workers.
+- The rename covers both forms: 'Dataproc on Compute Engine' is the cluster deployment and 'Serverless for Apache Spark' is the serverless one.
+Like what I know: Renting a ready-made Spark cluster instead of installing Hadoop yourself. AWS EMR.
 
 ## Isolate
 Pick it when: Moving an on-prem Hadoop or Spark cluster to Google Cloud, or keeping an investment in existing Spark code. "Spark" or "Hadoop" in the scenario gives it away.
