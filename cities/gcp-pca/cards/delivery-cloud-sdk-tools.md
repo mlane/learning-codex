@@ -9,7 +9,7 @@ lives_at:
 ## Baseline
 What it is: The ways to drive Google Cloud from the command line and from code instead of the console (exam guide 5.2).
 - Cloud SDK command-line tools: `gcloud` for most services, `gcloud storage` (older `gsutil`) for Cloud Storage, `bq` for BigQuery, `kubectl` for GKE.
-- Cloud Shell: a free browser terminal on a small temporary VM with the tools preinstalled, already signed in as you, with a 5 GB home directory that persists.
+- Cloud Shell: a free browser terminal on a small temporary VM with the tools preinstalled, already signed in as you, with a 5 GB home directory that persists. Terraform is no longer one of the preinstalled tools (June 2026); a `~/.customize_environment` script runs at each start and can reinstall it, as in the Terraform lab.
 - Cloud Shell Editor: a browser IDE on that same VM. Cloud Code: the IDE extension (VS Code, JetBrains, Cloud Shell Editor) for writing, running and debugging Cloud Run and GKE apps.
 - Client libraries: the per-language libraries for calling Google APIs, preferred over raw REST calls. They find credentials through Application Default Credentials: your own user locally, the attached service account in the cloud. No key file either way.
 - Emulators run a service on your machine for development and tests, with no cost and no network: Bigtable, Spanner, Pub/Sub, Firestore.

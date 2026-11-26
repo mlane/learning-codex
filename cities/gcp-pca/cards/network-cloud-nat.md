@@ -23,7 +23,7 @@ Pick it when: Private VMs or nodes need outbound internet access.
 Not it when (use Private Google Access instead): The destination is a Google API or service (Cloud Storage, BigQuery). For inbound traffic, a load balancer.
 
 ## Execute
-What I built: Course labs (Elastic Infrastructure: both load balancer labs), date to add. Gateway `nat-config` on a new Cloud Router (`nat-router-us1`) so backend VMs with no external IP could still reach the internet (`apt-get install apache2`), while inbound traffic arrived only through the load balancer. Console build; the CLI form below is not yet run.
+What I built: Course labs (Elastic Infrastructure: both load balancer labs), date to add. Gateway `nat-config` on a new Cloud Router (`nat-router-us1` on the default network for the Application LB lab; `nat-router-us-east4` on `my-internal-app` for the internal LB lab) so backend VMs with no external IP could still reach the internet (`apt-get install apache2`), while inbound traffic arrived only through the load balancer. Console build; the CLI form below is not yet run.
 
 ```bash
 gcloud compute routers create nat-router-us1 --network=default --region=$REGION

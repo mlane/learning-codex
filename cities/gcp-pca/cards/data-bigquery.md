@@ -8,6 +8,7 @@ lives_at: regional or multi-region (set per dataset)
 
 ## Baseline
 What it is: Data warehouse that stores data and gives an interactive SQL interface to query it.
+- Petabyte scale with no database administrator needed. Reached from the console, the `bq` command-line tool, or the REST API through client libraries (Java, .NET, Python).
 - Layout: project, then dataset (has a location and an optional default table expiration), then tables.
 - Loads files from Cloud Storage (e.g. Avro) and builds the schema from what it finds in the file.
 - In a query, dataset ID and table ID are required. Project ID is optional and defaults to the current project.

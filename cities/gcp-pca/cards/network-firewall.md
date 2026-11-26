@@ -38,4 +38,6 @@ gcloud compute firewall-rules create fw-allow-health-check \
 
 Course lab, 2026-11-23. One rule per custom network allowing ICMP, SSH and RDP from anywhere to every instance in it. Commands are on the `network-vpc` card.
 
+Course lab (Elastic Infrastructure: internal Network LB), date to add. Two ingress rules on `my-internal-app`, both targeting the `backend-service` tag: `fw-allow-lb-access` (everything from 10.10.0.0/16, the clients inside the network) and `fw-allow-health-checks` (tcp:80 from 130.211.0.0/22 and 35.191.0.0/16). An internal load balancer still needs the health-check rule. Console build; the rest is on `network-load-balancing`.
+
 ## Missed
