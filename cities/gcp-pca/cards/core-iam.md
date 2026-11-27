@@ -19,7 +19,7 @@ What it is: Who (principal) can do what (role) on which resource. Roles are bund
 - Exam reflex: IAM is Google's preferred way to control access. Uniform bucket-level access over ACLs, IAM roles and gcloud when SSH is blocked, an Artifact Registry role for image pulls. An option that bypasses IAM checks is wrong.
 - Common real-world failures (OWASP Top 10 2025, first and second): broken access control and security misconfiguration. Default service accounts, the default VPC and broad roles kept "for now".
 - Service account impersonation: a person or workload borrows a service account's identity through a short-lived token instead of holding its key. Needs Service Account Token Creator. In the exam guide under secure remote access.
-- IAM Conditions: a binding that applies only when a condition holds (a time window, a resource name prefix, an access level).
+- IAM Conditions: a binding that applies only when a condition holds (a time window, a resource name prefix, an access level). A condition can also limit which roles someone may grant: the lab's student account could only grant or revoke Viewer.
 - Separation of duties: split roles so nobody can both make and approve a change. The key admin doesn't read the data; billing admins aren't project owners.
 - Audit: Cloud Audit Logs record who did what. Admin Activity logs are always on; Data Access logs are off by default (except BigQuery) and must be turned on.
 - Tools: Policy Troubleshooter (why was this allowed or denied), Policy Analyzer (who can reach what), IAM recommender (roles nobody has used in 90 days).
@@ -30,6 +30,15 @@ Pick it when: A predefined role covers the job. That's Google's default recommen
 Not it when (use a custom role instead): Even the narrowest predefined role grants more than the job needs.
 
 ## Execute
-What I built:
+What I built: Badge lab, 2026-11-27. Removed the previous engineer's Viewer role from the project. The policy had conditional bindings, so gcloud asked for a condition on every change: `None` (or `--condition=None`) when adding, `--all` when removing. Listed role by member to confirm which service accounts held what. Runbook: `labs/02-app-dev-environment.md`.
+
+```bash
+gcloud projects get-iam-policy $PROJECT_ID --flatten="bindings[].members" \
+  --format="table(bindings.role, bindings.members)"
+gcloud projects remove-iam-policy-binding $PROJECT_ID \
+  --member="user:$USER2" --role="roles/viewer" --all
+```
+
+- Member prefixes: `user:` for a person, `serviceAccount:` for a service account, `group:` for a group.
 
 ## Missed

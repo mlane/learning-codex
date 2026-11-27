@@ -14,6 +14,7 @@ What it is: An identity for a workload (VM, app, pipeline) instead of a person, 
 - Prefer one dedicated service account per app with only the roles it needs over the default Compute Engine one.
 - On GKE: Workload Identity Federation for GKE gives pods an IAM identity through their Kubernetes service account. A Kubernetes service account and an IAM service account are different things until that's set up. See compute-gke.
 - Kinds: user-managed (you create it), default (auto-created for Compute Engine and App Engine, historically with the Editor role, which is too broad), and service agents (Google's own services acting inside your project).
+- Recognise them by address. Default Compute Engine account: `PROJECT_NUMBER-compute@developer.gserviceaccount.com`. Service agents: `service-PROJECT_NUMBER@gs-project-accounts...` (Cloud Storage), `...@gcp-sa-eventarc...`, `...@gcp-sa-pubsub...`. A service agent may not exist until its service is first used.
 - Impersonation: grant Service Account Token Creator so a user or another service account gets short-lived credentials as this one. No key leaves Google.
 - An org policy can forbid key creation outright (`iam.disableServiceAccountKeyCreation`).
 - Access scopes on a VM are the legacy limiter. Set the scope to cloud-platform and control access with IAM roles.
@@ -24,6 +25,13 @@ Pick it when: Code or a machine needs to call Google Cloud APIs without a person
 Not it when (use Workload Identity Federation instead): The workload runs outside Google Cloud (on-prem, AWS, GitHub Actions). Federate its existing identity instead of exporting a key.
 
 ## Execute
-What I built:
+What I built: Badge lab, 2026-11-27. A Storage-triggered function needed four identities to line up: the Cloud Storage, Eventarc and Pub/Sub service agents, and the default Compute Engine account the function and its trigger ran as. Granting a role to the Storage service agent straight after looking it up failed with "does not exist"; minutes later it was in the policy holding the role. Runbook: `labs/02-app-dev-environment.md`.
+
+```bash
+gcloud storage service-agent --project=$PROJECT_ID
+gcloud projects describe $PROJECT_ID --format='value(projectNumber)'
+```
+
+- The lab ran the function as the default Compute Engine account. In real work that would be a dedicated service account with only the bucket and topic roles.
 
 ## Missed

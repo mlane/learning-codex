@@ -27,6 +27,12 @@ Pick it when: You need full OS control: lift-and-shift, specific OS or licensing
 Not it when (use GKE or Cloud Run instead): The app is containerized and you'd rather not manage VMs and OS patching.
 
 ## Execute
-What I built:
+What I built: Practice lab (Monitor a Compute Engine Instance with Cloud Monitoring), date to add. `lamp-1-vm`: E2, e2-medium, "Allow HTTP traffic" ticked, which adds the `http-server` tag and a firewall rule. Installed Apache over SSH and opened the default page on the VM's external IP. Stopped and started it later to watch monitoring and logging react. Console build; `labs/02-app-dev-environment.md`, section 8.
+
+```bash
+sudo apt-get update
+sudo apt-get install apache2 php
+sudo service apache2 restart
+```
 
 ## Missed

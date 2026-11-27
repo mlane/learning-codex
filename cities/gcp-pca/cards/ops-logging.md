@@ -52,4 +52,10 @@ LIMIT 15
 
 - The table name starts with `compute_googleapis`. Use the Table ID without the project ID in front.
 
+Practice labs (App Dev Environment badge), date to add. Logs Explorer filtered to VM Instance > `lamp-1-vm`, then stopped and started the VM and watched the entries arrive. Read a function's logs from the CLI; they can lag by several minutes. Runbook: `labs/02-app-dev-environment.md`.
+
+```bash
+gcloud functions logs read $FUNCTION --region=$REGION --limit=20
+```
+
 ## Missed

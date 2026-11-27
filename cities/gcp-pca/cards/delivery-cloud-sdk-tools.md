@@ -22,6 +22,18 @@ Pick it when: Scripting a one-off task, developing locally against Google servic
 Not it when (use Terraform instead): The infrastructure has to be repeatable and reviewed. A pile of gcloud commands is imperative and drifts.
 
 ## Execute
-What I built:
+What I built: Badge lab, 2026-11-27. Ran the whole challenge from Cloud Shell: values exported as variables at the top, default region and zone set with `gcloud config set`, files written with a quoted heredoc, the function deployed with `gcloud functions deploy`. In a practice lab, used the Python client library for Pub/Sub inside a virtual environment; it picked up credentials on its own. Runbook: `labs/02-app-dev-environment.md`.
+
+```bash
+gcloud config set compute/region $REGION
+export PROJECT_NUMBER=$(gcloud projects describe $PROJECT_ID --format='value(projectNumber)')
+cat > index.js <<'EOF'
+...
+EOF
+```
+
+- Quote the heredoc marker (`<<'EOF'`) when the file contains `${...}`, or the shell expands it.
+- Paste one block at a time. Pasting before the prompt returns mashes commands together.
+- `--format='value(...)'` pulls one field out of a command's output, ready for a variable.
 
 ## Missed
