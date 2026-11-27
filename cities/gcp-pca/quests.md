@@ -17,7 +17,7 @@ Items tagged `{key}` are skill badges (access keys). `{key!}` is the required on
 ## Week 2 | 2026-11-10 | ~15h
 - [x] Attend the live session, Tuesday 13:00 to 14:30 Central
 - [x] Course: Networking in Google Cloud: Fundamentals
-- [ ] Course: Elastic Google Cloud Infrastructure: Scaling and Automation
+- [x] Course: Elastic Google Cloud Infrastructure: Scaling and Automation
 - [x] Badge: Set Up an App Dev Environment on Google Cloud {key}
 
 ## Week 3 | 2026-11-17 | ~17h
@@ -27,7 +27,7 @@ Items tagged `{key}` are skill badges (access keys). `{key!}` is the required on
 - [ ] Badge: Implement Cloud Security Fundamentals on Google Cloud {key}
 
 ## Week 4 | 2026-11-24 | ~12h
-- [ ] Attend the live session, Tuesday 13:00 to 14:30 Central
+- [x] Attend the live session, Tuesday 13:00 to 14:30 Central
 - [ ] Course: Getting Started with Terraform for Google Cloud
 - [ ] Course: Reliable Google Cloud Infrastructure: Design and Process
 - [ ] Badge: Cloud Architecture: Design, Implement, and Manage {key}
