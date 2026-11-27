@@ -12,6 +12,7 @@ What it is: Google's managed DNS, on the same infrastructure as Google: low late
 - DNS forwarding and peering resolve names between on-prem and Google Cloud.
 - Split horizon: a public and a private zone with the same name, so internal clients get internal IPs.
 - Hybrid DNS: a forwarding zone sends queries for on-prem names to the on-prem DNS servers; an inbound server policy lets on-prem resolve Google Cloud private names. Both travel over VPN or Interconnect.
+- Recommended hybrid setup: two authoritative DNS systems. Cloud DNS answers for the private Google Cloud names, the existing on-prem DNS servers answer for on-prem names, and each forwards to the other.
 - DNS peering lets one VPC resolve names using another VPC's zones (hub and spoke).
 - Routing policies return weighted, geolocation or failover answers, with health checks.
 - DNSSEC signs public zones against spoofing.

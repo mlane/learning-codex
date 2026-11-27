@@ -22,7 +22,7 @@ Items tagged `{key}` are skill badges (access keys). `{key!}` is the required on
 
 ## Week 3 | 2026-11-17 | ~17h
 - [x] Attend the live session, Tuesday 13:00 to 14:30 Central
-- [ ] Course: Networking in Google Cloud: Network Architecture
+- [x] Course: Networking in Google Cloud: Network Architecture
 - [ ] Course: Managing Security in Google Cloud
 - [ ] Badge: Implement Cloud Security Fundamentals on Google Cloud {key}
 
