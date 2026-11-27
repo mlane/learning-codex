@@ -31,7 +31,6 @@ Items tagged `{key}` are skill badges (access keys). `{key!}` is the required on
 - [ ] Course: Getting Started with Terraform for Google Cloud
 - [ ] Course: Reliable Google Cloud Infrastructure: Design and Process
 - [ ] Badge: Cloud Architecture: Design, Implement, and Manage {key}
-- [ ] Apply for the exam voucher once five badges are done
 
 ## Week 5 | 2026-12-01 | ~12h
 - [ ] Attend the live session, Tuesday 13:00 to 14:30 Central
@@ -46,6 +45,7 @@ Items tagged `{key}` are skill badges (access keys). `{key!}` is the required on
 - [ ] Badge: Develop Serverless Applications on Cloud Run {key}
 - [ ] Take the final exam-like quiz and log the score
 - [ ] Book the exam
+- [ ] Apply for the exam voucher once five badges are done
 
 ## Revision | 2026-12-15 | until 20 Jan
 - [ ] Clear every breached entry
